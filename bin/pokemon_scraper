@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+import logging
+import csv
+from pokemon_irc.pokedb import (move, entry, ability, types,
+                                poke_get_type_damage, poke_get)
+logging.basicConfig(level=logging.INFO)
+
+
+datatypes = {
+    ("moves.csv", move),
+    ("pokemons.csv", entry),
+    ("abilities.csv", ability),
+}
+
+# XXX: Too lazy to make it more generic
+speshul_datatypes = [
+    ("types.csv", poke_get_type_damage, types)
+]
+
+
+def main():
+    for (file, datatype) in datatypes:
+        logging.info("downloading %s content..." % file)
+        with open(file, 'w') as file:
+            writer = csv.writer(file)
+            writer.writerows(poke_get(datatype))
+
+    for file, func, datatype in speshul_datatypes:
+        logging.info("downloading %s content..." % file)
+        with open(file, 'w') as file:
+            writer = csv.writer(file)
+            writer.writerows(func(datatype))
+
+
+    #with open("file")
+    #poke_get_type_matrix()
+
+if __name__ == '__main__':
+    main()
