@@ -19,9 +19,13 @@ def get_columns(row, datatype):
     return ret_list
 
 
+def request_table(url):
+    text = requests.get(url).text
+    return lxml.html.fromstring(text)
+
+
 def poke_get(datatype):
-    text = requests.get(datatype.url).text
-    tree = lxml.html.fromstring(text)
+    tree = request_table(datatype.url)
 
     def parse_row(row):
         return get_columns(row, datatype)
@@ -31,8 +35,7 @@ def poke_get(datatype):
 
 
 def poke_get_type_damage(datatype=types):
-    text = requests.get(datatype.url).text
-    tree = lxml.html.fromstring(text)
+    tree = request_table(datatype.url)
 
     def parse_row(row):
         return get_columns(row, datatype)

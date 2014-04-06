@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pokémon moves: list of attacks | Pokémon Database</title>
+
+	<link rel="stylesheet" href="/static/css/min/pokemondb.13.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="description" content="There are over 460 Pokémon attacks in total; this page lists every move with lots of detail. filter by name, type and category.">
+	<link rel="canonical" href="http://pokemondb.net/move/all">
+
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+	<link rel="alternate" type="application/rss+xml" href="http://pokemondb.net/news/feed" title="The Pokemon Database newsfeed">
+
+	<!--[if lt IE 9]>
+	<script src="/static/js/html5shiv.js"></script>
+	<link rel="stylesheet" href="/static/css/ie.css">
+	<![endif]-->
+
+	<script>
+	var _gaq = [['_setAccount', 'UA-1974891-7'],['_trackPageview']];
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'http://www.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+	<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+
+<header class="grid-wrapper">
+	<a class="header-logo" href="/">Pokémon Database</a>
+
+	<form method="get" action="/search" class="sitesearch-form">
+		<input type="text" name="q" id="sitesearch" autocomplete="off" placeholder="Enter keywords" class="sitesearch-input">
+		<button type="submit" class="sitesearch-btn">Search</button>
+		<div id="sitesearch-results" class="sitesearch-results"></div>
+	</form>
+</header>
+
+
+<nav class="main-menu grid-wrapper">
+<ul class="main-menu-list">
+	<li><a href="/sitemap">Pokémon data</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokedex">Pokédex</a>
+			<li><a href="/move">Moves</a>
+			<li><a href="/type">Type chart</a>
+			<li><a href="/ability">Abilities</a>
+			<li><a href="/item">Items</a>
+			<li><a href="/evolution">Evolution chains</a>
+			<li><a href="/location">Pokémon locations</a>
+			<li><a href="/sprites">Sprite gallery</a>
+			<li><a href="/pokedex/all">Pokémon stats</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Game mechanics</a>
+		<ul class="main-menu-sub">
+			<li><a href="/mechanics/breeding">Breeding &amp; egg groups</a>
+			<li><a href="/mechanics/move-tutors">Move Tutors</a>
+			<li><a href="/type/dual">Dual type chart</a>
+			<li><a href="/ev">Effort Values (EVs)</a>
+			<li><a href="/mechanics/natures">Natures</a>
+			<li><a href="/mechanics/hidden">IVs/Personality</a>
+			<li class="hr-title">Useful tools
+			<li><a href="/tools/moveset-search">Moveset searcher</a>
+			<li><a href="/tools/type-coverage">Type coverage checker</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Pokémon games</a>
+		<ul class="main-menu-sub">
+			<li><a href="/x-y">X &amp; Y</a>
+			<li class="hr">
+			<li><a href="/black-white-2">Black 2 &amp; White 2</a>
+			<li><a href="/black-white">Black &amp; White</a>
+			<li class="hr">
+			<li><a href="/heartgold-soulsilver">HeartGold &amp; SoulSilver</a>
+			<li><a href="/platinum">Platinum</a>
+			<li><a href="/diamond-pearl">Diamond &amp; Pearl</a>
+			<li class="hr">
+			<li><a href="/emerald">Emerald</a>
+			<li><a href="/firered-leafgreen">FireRed &amp; LeafGreen</a>
+			<li><a href="/ruby-sapphire">Ruby &amp; Sapphire</a>
+			<li class="hr">
+			<li><a href="/crystal">Crystal</a>
+			<li><a href="/gold-silver">Gold &amp; Silver</a>
+			<li class="hr">
+			<li><a href="/yellow">Yellow</a>
+			<li><a href="/red-blue">Red &amp; Blue</a>
+			<li class="hr">
+			<li><a href="/spinoff/pokemon-bank">Pokémon Bank</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Community</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokebase/">Pokémon Q&amp;A</a>
+			<li><a href="/pokebase/rmt">Pokémon Rate My Team</a>
+			<li><a href="/pokebase/chat">Chat Room</a>
+			<li><a href="/pokebase/meta/">Meta (Suggestion Box)</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Other information</a>
+		<ul class="main-menu-sub">
+			<li><a href="/">Pokémon News (home page)</a>
+			<li><a href="/maps">Maps/Puzzles</a>
+			<li><a href="/events">Pokémon events &amp; passwords</a>
+			<li><a href="/etymology">Pokémon name origins</a>
+			<li><a href="/glossary">Pokémon dictionary</a>
+			<li><a href="/about">About/Contact us</a>
+			<li class="hr-title">Quick links
+			<li><a href="/pokedex/national">Full Pokémon list</a>
+			<li><a href="/pokedex/game/black-white-2">Black 2 &amp; White 2 Pokédex</a>
+			<li><a href="/pokedex/game/black-white">Black &amp; White Pokédex</a>
+		</ul>
+	</li>
+</ul>
+</nav>
+
+<article class="main-content grid-wrapper">
+
+<h1>Pokémon move list</h1>
+
+<div class="intro">
+	<p>This is a full list of <em>every Pokémon move</em> from all five generations of the game series, including
+		Black &amp; White. The power, accuracy and PP are listed along with any additional effects.
+	<p>Click a move name to see even more detailed information, including which Pokémon can learn that move. You
+		can click a column heading to instantly sort by that column, or filter on move name, type and category
+		using the options provided.
+	<p class="small">For new moves from the upcoming Pokémon X&amp;Y, see the <a href="/move/generation/6">Generation 6 moves</a> page.
+
+		<div class="share-icons">
+		<i class="share-blurb">Share this page:</i>
+		<a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fpokemondb.net%2Fmove%2Fall&amp;t=Pok%C3%A9mon+moves%3A+list+of+attacks"
+			class="icon-facebook" title="Share on Facebook" target="_blank">Facebook</a>
+		<a href="http://twitter.com/share?url=http%3A%2F%2Fpokemondb.net%2Fmove%2Fall&amp;text=Pok%C3%A9mon+moves%3A+list+of+attacks+%28via+%40pokemondb%29+"
+			class="icon-twitter" title="Tweet this page" target="_blank">Twitter</a>
+		<a href="https://plus.google.com/share?url=http%3A%2F%2Fpokemondb.net%2Fmove%2Fall"
+			class="icon-gplus" title="Share on Google+" target="_blank">Google+</a>
+		<a href="mailto:?subject=Pokemon+link&amp;body=Check+out+this+cool+Pokemon+page%21%0A%0APok%C3%A9mon+moves%3A+list+of+attacks%0Ahttp%3A%2F%2Fpokemondb.net%2Fmove%2Fall"
+			class="icon-email" title="Email this page" target="_blank">Email</a>
+	</div>
+	</div>
+
+
+<div class="ad-responsive">
+	<style>
+  .adresp-leaderboard { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-leaderboard { width: 728px; height: 90px; } }
+</style>
+<!-- Pokemon [responsive] - leaderboard, text -->
+<ins class="adsbygoogle adresp-leaderboard"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="5568695004"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<noscript><div class="colset"><div class="col span-6 push-center type-icon-list"><a class="type-icon type-normal"  href="/move/type/normal" >Normal</a> <a class="type-icon type-fire"  href="/move/type/fire" >Fire</a> <a class="type-icon type-water"  href="/move/type/water" >Water</a> <a class="type-icon type-electric"  href="/move/type/electric" >Electric</a> <a class="type-icon type-grass"  href="/move/type/grass" >Grass</a> <a class="type-icon type-ice"  href="/move/type/ice" >Ice</a> <a class="type-icon type-fighting"  href="/move/type/fighting" >Fighting</a> <a class="type-icon type-poison"  href="/move/type/poison" >Poison</a> <a class="type-icon type-ground"  href="/move/type/ground" >Ground</a> <a class="type-icon type-flying"  href="/move/type/flying" >Flying</a> <a class="type-icon type-psychic"  href="/move/type/psychic" >Psychic</a> <a class="type-icon type-bug"  href="/move/type/bug" >Bug</a> <a class="type-icon type-rock"  href="/move/type/rock" >Rock</a> <a class="type-icon type-ghost"  href="/move/type/ghost" >Ghost</a> <a class="type-icon type-dragon"  href="/move/type/dragon" >Dragon</a> <a class="type-icon type-dark"  href="/move/type/dark" >Dark</a> <a class="type-icon type-steel"  href="/move/type/steel" >Steel</a> <a class="type-icon type-fairy"  href="/move/type/fairy" >Fairy</a> </div></div></noscript>
+<div class="table-filters">
+	<label for="filter-move-name">Name/Effect:</label>
+	<input type="text" tabindex="2" class="input-text" id="filter-move-name" data-filter-col="0,7">
+
+	<label for="filter-move-type">Type:</label>
+	<select tabindex="3" id="filter-move-type" data-filter-col="1">
+		<option value="">- All -</option>
+					<option value="normal">Normal</option>
+					<option value="fire">Fire</option>
+					<option value="water">Water</option>
+					<option value="electric">Electric</option>
+					<option value="grass">Grass</option>
+					<option value="ice">Ice</option>
+					<option value="fighting">Fighting</option>
+					<option value="poison">Poison</option>
+					<option value="ground">Ground</option>
+					<option value="flying">Flying</option>
+					<option value="psychic">Psychic</option>
+					<option value="bug">Bug</option>
+					<option value="rock">Rock</option>
+					<option value="ghost">Ghost</option>
+					<option value="dragon">Dragon</option>
+					<option value="dark">Dark</option>
+					<option value="steel">Steel</option>
+					<option value="fairy">Fairy</option>
+			</select>
+
+	<label for="filter-move-cat">Category:</label>
+	<select tabindex="4" id="filter-move-cat" data-filter-col="2">
+		<option value="">- All -</option>
+					<option value="physical">Physical</option>
+					<option value="special">Special</option>
+					<option value="status">Status</option>
+			</select>
+</div>
+
+<div class="colset span-full">
+	<table id="moves" class="data-table wide-table">
+	<thead>
+		<tr>
+			<th class="sorting" data-sort="string" ><div class="sortwrap">Name</div></th> <th ><div class="sortwrap">Type</div></th> <th ><div class="sortwrap">Cat.</div></th> <th class="sorting" data-sort="intMoveBlanks"  data-sort-desc="intMoveBlanksDesc" ><div class="sortwrap">Power</div></th> <th class="sorting" data-sort="intMoveBlanks"  data-sort-desc="intMoveBlanksDesc" ><div class="sortwrap">Acc.</div></th> <th class="sorting" data-sort="int" ><div class="sortwrap">PP</div></th> <th class="sorting" data-sort="strMoveBlanks"  data-sort-desc="strMoveBlanksDesc" ><div class="sortwrap">TM</div></th> <th ><div class="sortwrap">Effect</div></th> <th class="sorting" data-sort="intMoveBlanks"  data-sort-desc="intMoveBlanksDesc" ><div class="sortwrap">Prob. (%)</div></th> 		</tr>
+	</thead>
+	<tbody>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/absorb" title="View details for Absorb">Absorb</a></td><td class="cell-icon"><a class="type-icon type-grass"  href="/type/grass" >Grass</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">20</td> <td class="num" >100</td> <td class="num">25</td> 
+			<td class="num"></td>
+			<td class="long-text">User recovers half the HP inflicted on opponent.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/acid" title="View details for Acid">Acid</a></td><td class="cell-icon"><a class="type-icon type-poison"  href="/type/poison" >Poison</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">40</td> <td class="num" >100</td> <td class="num">30</td> 
+			<td class="num"></td>
+			<td class="long-text">May lower opponent's Special Defense.</td>
+			<td class="num">10</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/acid-armor" title="View details for Acid Armor">Acid Armor</a></td><td class="cell-icon"><a class="type-icon type-poison"  href="/type/poison" >Poison</a></td><td class="cell-icon"><i class="icon-move-cat status" title="Status">Status</i></td> <td class="num">-</td> <td class="num" >-</td> <td class="num">20</td> 
+			<td class="num"></td>
+			<td class="long-text">Sharply raises user's Defense.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/acid-spray" title="View details for Acid Spray">Acid Spray</a></td><td class="cell-icon"><a class="type-icon type-poison"  href="/type/poison" >Poison</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">40</td> <td class="num" >100</td> <td class="num">20</td> 
+			<td class="num"></td>
+			<td class="long-text">Sharply lowers opponent's Special Defense.</td>
+			<td class="num">100</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/acrobatics" title="View details for Acrobatics">Acrobatics</a></td><td class="cell-icon"><a class="type-icon type-flying"  href="/type/flying" >Flying</a></td><td class="cell-icon"><i class="icon-move-cat physical" title="Physical">Physical</i></td> <td class="num">55</td> <td class="num" >100</td> <td class="num">15</td> 
+			<td class="num">TM62</td>
+			<td class="long-text">Stronger when the user does not have a held item.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/acupressure" title="View details for Acupressure">Acupressure</a></td><td class="cell-icon"><a class="type-icon type-normal"  href="/type/normal" >Normal</a></td><td class="cell-icon"><i class="icon-move-cat status" title="Status">Status</i></td> <td class="num">-</td> <td class="num" >-</td> <td class="num">30</td> 
+			<td class="num"></td>
+			<td class="long-text">Sharply raises a random stat.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/aerial-ace" title="View details for Aerial Ace">Aerial Ace</a></td><td class="cell-icon"><a class="type-icon type-flying"  href="/type/flying" >Flying</a></td><td class="cell-icon"><i class="icon-move-cat physical" title="Physical">Physical</i></td> <td class="num">60</td> <td class="num" data-sort-value="101">&infin;</td> <td class="num">20</td> 
+			<td class="num">TM40</td>
+			<td class="long-text">Ignores Accuracy and Evasiveness.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/aeroblast" title="View details for Aeroblast">Aeroblast</a></td><td class="cell-icon"><a class="type-icon type-flying"  href="/type/flying" >Flying</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">100</td> <td class="num" >95</td> <td class="num">5</td> 
+			<td class="num"></td>
+			<td class="long-text">High critical hit ratio.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/after-you" title="View details for After You">After You</a></td><td class="cell-icon"><a class="type-icon type-normal"  href="/type/normal" >Normal</a></td><td class="cell-icon"><i class="icon-move-cat status" title="Status">Status</i></td> <td class="num">-</td> <td class="num" >-</td> <td class="num">15</td> 
+			<td class="num"></td>
+			<td class="long-text">Gives target priority in the next turn.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/agility" title="View details for Agility">Agility</a></td><td class="cell-icon"><a class="type-icon type-psychic"  href="/type/psychic" >Psychic</a></td><td class="cell-icon"><i class="icon-move-cat status" title="Status">Status</i></td> <td class="num">-</td> <td class="num" >-</td> <td class="num">30</td> 
+			<td class="num"></td>
+			<td class="long-text">Sharply raises user's Speed.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/air-cutter" title="View details for Air Cutter">Air Cutter</a></td><td class="cell-icon"><a class="type-icon type-flying"  href="/type/flying" >Flying</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">60</td> <td class="num" >95</td> <td class="num">25</td> 
+			<td class="num"></td>
+			<td class="long-text">High critical hit ratio.</td>
+			<td class="num">-</td>
+		</tr>
+			<tr>
+			<td class="cell-icon-string"><a class="ent-name" href="/move/air-slash" title="View details for Air Slash">Air Slash</a></td><td class="cell-icon"><a class="type-icon type-flying"  href="/type/flying" >Flying</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">75</td> <td class="num" >95</td> <td class="num">20</td> 
+			<td class="num"></td>
+			<td class="long-text">May cause flinching.</td>
+			<td class="num">30</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="ad-responsive">
+	<style>
+  .adresp-footer { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-footer { width: 728px; height: 90px; } }
+</style>
+<!-- Pokemon [responsive] - footer -->
+<ins class="adsbygoogle adresp-footer"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="9080564600"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+</article>
+
+<footer class="grid-wrapper">
+	<span class="footer-links"><a href="/about#privacy">Privacy Policy</a></span>
+	<span class="footer-copyright">
+		All written content &copy; Pokémon Database, 2008-2014.
+		Pokémon images/names © 1995-2013 Nintendo/Game Freak.
+	</span>
+</footer>
+
+<!--[if lt IE 9]>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+<!--[if gte IE 9]><!-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!--<![endif]-->
+<script>window.jQuery || document.write('<script src="/static/js/dev/jquery-1.10.1.min.js"><\/script>')</script>
+
+<script src="/static/js/base.33.js"></script>
+
+<script>
+
+$(function () {
+	var $table = $('.data-table');
+	// set up overlay
+	$table.disableBlock();
+	// set up table sorting
+	$table.stupidtable(stblDataTypes);
+	$('thead th:first-child', $table).click();
+	// overlay while sorting
+	$table.on('beforetablesort', function (event, data) {
+		$(this).disableBlock('on');
+	});
+	$table.on('aftertablesort', function (event, data) {
+		$(this).disableBlock('off');
+	});
+	// table filtering
+	$table.filtable({ controlPanel: $('.table-filters') });
+});
+
+</script>
+
+</body>
+</html>

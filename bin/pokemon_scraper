@@ -2,35 +2,48 @@
 # -*- encoding: utf-8 -*-
 import logging
 import csv
+from sqlalchemy.orm import sessionmaker
 from pokemon_irc.pokedb import (move, entry, ability, types,
                                 poke_get_type_damage, poke_get)
+
+from pokemon_irc.models import orm
 logging.basicConfig(level=logging.INFO)
 
 
+Session = sessionmaker(bind=orm.engine)
+session = Session()
+
+
+def types_to_orm(typedict):
+    session.add_all([orm.Type(name=t) for t in types])
+    session.commit()
+
+
+
+
 datatypes = {
-    ("moves.csv", move),
-    ("pokemons.csv", entry),
-    ("abilities.csv", ability),
+    #("moves.csv", move, moves_to_orm),
+    #("pokemons.csv", entry, pokemons_to_orm),
+    #("abilities.csv", ability, abilities_to_orm),
 }
 
 # XXX: Too lazy to make it more generic
 speshul_datatypes = [
-    ("types.csv", poke_get_type_damage, types)
+    ("types.csv", types, poke_get_type_damage, types_to_orm)
 ]
 
 
 def main():
-    for (file, datatype) in datatypes:
+    for file, datatype, func, orm_func in speshul_datatypes: #TODO: better naming
         logging.info("downloading %s content..." % file)
-        with open(file, 'w') as file:
-            writer = csv.writer(file)
-            writer.writerows(poke_get(datatype))
+        orm_func(func(datatype))
 
-    for file, func, datatype in speshul_datatypes:
-        logging.info("downloading %s content..." % file)
-        with open(file, 'w') as file:
-            writer = csv.writer(file)
-            writer.writerows(func(datatype))
+    #for (file, datatype) in datatypes:
+        #logging.info("downloading %s content..." % file)
+        #with open(file, 'w') as file:
+            #writer = csv.writer(file)
+            #writer.writerows(poke_get(datatype))
+
 
 
     #with open("file")

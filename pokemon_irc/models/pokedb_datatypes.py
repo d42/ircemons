@@ -75,6 +75,6 @@ triples = [
     [entry, entry_defaults, settings.POKEDB_POKEMON_URL],
     [types, [1] * len(types), settings.POKEDB_TYPE_CHART_URL]
 ]
-for tup, d, url in triples:
-    tup.defaults = d
-    tup.url = url
+for type, d, url in triples:
+    type.defaults = d
+    type.url = url
