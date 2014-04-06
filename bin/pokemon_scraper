@@ -2,11 +2,10 @@
 # -*- encoding: utf-8 -*-
 import logging
 import csv
-from sqlalchemy.orm import sessionmaker
-from pokemon_irc.pokedb import (move, entry, ability, types,
-                                poke_get_type_damage, poke_get)
-
 from pokemon_irc.models import orm
+from sqlalchemy.orm import sessionmaker
+from pokemon_irc.web import poke_get_type_damage, poke_get
+from pokemon_irc.models.pokedb_datatypes import move, entry, ability, types
 logging.basicConfig(level=logging.INFO)
 
 

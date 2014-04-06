@@ -3,7 +3,7 @@ init:
 
 
 get_pokemans:
-	./launch_scrapper
+	./launch_scraper
 
 
 # XXX: switch to database much

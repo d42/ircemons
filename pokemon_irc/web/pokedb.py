@@ -4,7 +4,6 @@ from itertools import zip_longest, product
 from collections import defaultdict
 import requests
 import lxml.html
-from . models.pokedb_datatypes import entry, move, ability, types
 
 
 def get_columns(row, datatype):
@@ -34,7 +33,7 @@ def poke_get(datatype):
         yield datatype(*parse_row(row))
 
 
-def poke_get_type_damage(datatype=types):
+def poke_get_type_damage(datatype):
     tree = request_table(datatype.url)
 
     def parse_row(row):
