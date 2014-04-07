@@ -207,7 +207,7 @@
 	</thead>
 	<tbody>
 			<tr>
-			<td class="cell-icon-string"><a class="ent-name" href="/move/absorb" title="View details for Absorb">Absorb</a></td><td class="cell-icon"><a class="type-icon type-grass"  href="/type/grass" >Grass</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">20</td> <td class="num" >100</td> <td class="num">25</td> 
+			<td class="cell-icon-string"><a class="ent-name" href="/move/absorb" title="View details for Absorb">derpderp</a></td><td class="cell-icon"><a class="type-icon type-grass"  href="/type/grass" >Grass</a></td><td class="cell-icon"><i class="icon-move-cat special" title="Special">Special</i></td> <td class="num">20</td> <td class="num" >100</td> <td class="num">25</td> 
 			<td class="num"></td>
 			<td class="long-text">User recovers half the HP inflicted on opponent.</td>
 			<td class="num">-</td>

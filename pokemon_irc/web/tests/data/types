@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pokémon type chart: strengths and weaknesses | Pokémon Database</title>
+
+	<link rel="stylesheet" href="/static/css/min/pokemondb.13.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="description" content="A type chart listing the strengths and weaknesses of each Pokémon type.">
+	<link rel="canonical" href="http://pokemondb.net/type">
+
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+	<link rel="alternate" type="application/rss+xml" href="http://pokemondb.net/news/feed" title="The Pokemon Database newsfeed">
+
+	<!--[if lt IE 9]>
+	<script src="/static/js/html5shiv.js"></script>
+	<link rel="stylesheet" href="/static/css/ie.css">
+	<![endif]-->
+
+	<script>
+	var _gaq = [['_setAccount', 'UA-1974891-7'],['_trackPageview']];
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'http://www.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+	<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+
+<header class="grid-wrapper">
+	<a class="header-logo" href="/">Pokémon Database</a>
+
+	<form method="get" action="/search" class="sitesearch-form">
+		<input type="text" name="q" id="sitesearch" autocomplete="off" placeholder="Enter keywords" class="sitesearch-input">
+		<button type="submit" class="sitesearch-btn">Search</button>
+		<div id="sitesearch-results" class="sitesearch-results"></div>
+	</form>
+</header>
+
+
+<nav class="main-menu grid-wrapper">
+<ul class="main-menu-list">
+	<li><a href="/sitemap">Pokémon data</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokedex">Pokédex</a>
+			<li><a href="/move">Moves</a>
+			<li><a href="/type">Type chart</a>
+			<li><a href="/ability">Abilities</a>
+			<li><a href="/item">Items</a>
+			<li><a href="/evolution">Evolution chains</a>
+			<li><a href="/location">Pokémon locations</a>
+			<li><a href="/sprites">Sprite gallery</a>
+			<li><a href="/pokedex/all">Pokémon stats</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Game mechanics</a>
+		<ul class="main-menu-sub">
+			<li><a href="/mechanics/breeding">Breeding &amp; egg groups</a>
+			<li><a href="/mechanics/move-tutors">Move Tutors</a>
+			<li><a href="/type/dual">Dual type chart</a>
+			<li><a href="/ev">Effort Values (EVs)</a>
+			<li><a href="/mechanics/natures">Natures</a>
+			<li><a href="/mechanics/hidden">IVs/Personality</a>
+			<li class="hr-title">Useful tools
+			<li><a href="/tools/moveset-search">Moveset searcher</a>
+			<li><a href="/tools/type-coverage">Type coverage checker</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Pokémon games</a>
+		<ul class="main-menu-sub">
+			<li><a href="/x-y">X &amp; Y</a>
+			<li class="hr">
+			<li><a href="/black-white-2">Black 2 &amp; White 2</a>
+			<li><a href="/black-white">Black &amp; White</a>
+			<li class="hr">
+			<li><a href="/heartgold-soulsilver">HeartGold &amp; SoulSilver</a>
+			<li><a href="/platinum">Platinum</a>
+			<li><a href="/diamond-pearl">Diamond &amp; Pearl</a>
+			<li class="hr">
+			<li><a href="/emerald">Emerald</a>
+			<li><a href="/firered-leafgreen">FireRed &amp; LeafGreen</a>
+			<li><a href="/ruby-sapphire">Ruby &amp; Sapphire</a>
+			<li class="hr">
+			<li><a href="/crystal">Crystal</a>
+			<li><a href="/gold-silver">Gold &amp; Silver</a>
+			<li class="hr">
+			<li><a href="/yellow">Yellow</a>
+			<li><a href="/red-blue">Red &amp; Blue</a>
+			<li class="hr">
+			<li><a href="/spinoff/pokemon-bank">Pokémon Bank</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Community</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokebase/">Pokémon Q&amp;A</a>
+			<li><a href="/pokebase/rmt">Pokémon Rate My Team</a>
+			<li><a href="/pokebase/chat">Chat Room</a>
+			<li><a href="/pokebase/meta/">Meta (Suggestion Box)</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Other information</a>
+		<ul class="main-menu-sub">
+			<li><a href="/">Pokémon News (home page)</a>
+			<li><a href="/maps">Maps/Puzzles</a>
+			<li><a href="/events">Pokémon events &amp; passwords</a>
+			<li><a href="/etymology">Pokémon name origins</a>
+			<li><a href="/glossary">Pokémon dictionary</a>
+			<li><a href="/about">About/Contact us</a>
+			<li class="hr-title">Quick links
+			<li><a href="/pokedex/national">Full Pokémon list</a>
+			<li><a href="/pokedex/game/black-white-2">Black 2 &amp; White 2 Pokédex</a>
+			<li><a href="/pokedex/game/black-white">Black &amp; White Pokédex</a>
+		</ul>
+	</li>
+</ul>
+</nav>
+
+<article class="main-content grid-wrapper">
+
+<h1>Pokémon types &amp; type chart</h1>
+
+<div class="colset">
+
+	<div class="col lap-span-5 desk-span-4">
+		<h2>Type list</h2>
+		<div class="type-icon-list">
+					<a class="type-icon type-normal"  href="/type/normal" >Normal</a>					<a class="type-icon type-fire"  href="/type/fire" >Fire</a>					<a class="type-icon type-water"  href="/type/water" >Water</a>					<a class="type-icon type-electric"  href="/type/electric" >Electric</a>					<a class="type-icon type-grass"  href="/type/grass" >Grass</a>					<a class="type-icon type-ice"  href="/type/ice" >Ice</a>					<a class="type-icon type-fighting"  href="/type/fighting" >Fighting</a>					<a class="type-icon type-poison"  href="/type/poison" >Poison</a>					<a class="type-icon type-ground"  href="/type/ground" >Ground</a>					<a class="type-icon type-flying"  href="/type/flying" >Flying</a>					<a class="type-icon type-psychic"  href="/type/psychic" >Psychic</a>					<a class="type-icon type-bug"  href="/type/bug" >Bug</a>					<a class="type-icon type-rock"  href="/type/rock" >Rock</a>					<a class="type-icon type-ghost"  href="/type/ghost" >Ghost</a>					<a class="type-icon type-dragon"  href="/type/dragon" >Dragon</a>					<a class="type-icon type-dark"  href="/type/dark" >Dark</a>					<a class="type-icon type-steel"  href="/type/steel" >Steel</a>					<a class="type-icon type-fairy"  href="/type/fairy" >Fairy</a>				</div>
+
+
+			<div class="share-icons">
+		<i class="share-blurb">Share this page:</i>
+		<a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fpokemondb.net%2Ftype&amp;t=Pok%C3%A9mon+type+chart%3A+strengths+and+weaknesses"
+			class="icon-facebook" title="Share on Facebook" target="_blank">Facebook</a>
+		<a href="http://twitter.com/share?url=http%3A%2F%2Fpokemondb.net%2Ftype&amp;text=Pok%C3%A9mon+type+chart%3A+strengths+and+weaknesses+%28via+%40pokemondb%29+"
+			class="icon-twitter" title="Tweet this page" target="_blank">Twitter</a>
+		<a href="https://plus.google.com/share?url=http%3A%2F%2Fpokemondb.net%2Ftype"
+			class="icon-gplus" title="Share on Google+" target="_blank">Google+</a>
+		<a href="mailto:?subject=Pokemon+link&amp;body=Check+out+this+cool+Pokemon+page%21%0A%0APok%C3%A9mon+type+chart%3A+strengths+and+weaknesses%0Ahttp%3A%2F%2Fpokemondb.net%2Ftype"
+			class="icon-email" title="Email this page" target="_blank">Email</a>
+	</div>
+	
+		<div class="ad-responsive">
+			<style>
+  .adresp-rectangle { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-rectangle { width: 200px; height: 200px; } }
+  @media(min-width: 1179px) { .adresp-rectangle { width: 300px; height: 250px; } }
+</style>
+<!-- Pokemon [responsive] - rectangle -->
+<ins class="adsbygoogle adresp-rectangle"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="5370218609"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</div>
+
+	<div class="col lap-span-7 desk-span-8">
+		<h2>About Pokémon types</h2>
+
+		<p>All Pokémon creatures and their moves are assigned certain types. Each type has several strengths
+			and weaknesses in both attack and defense. In battle, you should use Pokémon and moves that have
+			a type advantage over your opponent; doing so will cause much more damage than normal.
+		<p>A single-type advantage (for instance a Water attack against a Ground-type Pokémon) will net you
+			double normal damage. The advantages also <q>add up</q>, so a double-type advantage (for instance
+			a Water attack against a Ground/Rock-type Pokémon) will net you quadruple damage. In both these
+			cases you will see the message <q>It's super effective!</q> in-game after the attack.
+		<p>Conversely, a single- and double-type disadvantage will afflict half and a quarter normal damage
+			respectively. Here you will see the message <q>It's not very effective...</q> in-game.
+		<p>Another advantage you can gain is Same Type Attack Bonus (STAB). As the name implies, this
+			increases the power of the move if the attacking Pokémon has the same type as the move used (for
+			example a Fire-type Pokémon using a Fire-type move). In this case the damage is 1.5 times normal.
+			Again this is added to any other advantages, so a Water-type Pokémon using a Water-type move
+			against a Ground/Rock-type Pokémon will bag you <em>six times</em> (2&times;2&times;1.5) normal damage!
+	</div>
+
+</div>
+
+
+<h2>Type chart</h2>
+
+<div class="colset">
+
+	<div class="col desk-span-4 lap-span-3">
+		<p>The full type chart here displays the strengths and weaknesses of each type. Look down the left hand side for the attacking type, then move across to see how effective it is against each Pokémon type.
+		<p class="small aside">Note: this chart is for the latest Generation 6 games, Pokémon X &amp; Y. Type charts for previous games have some minor differences - see below.
+
+		<h3>Chart key</h3>
+		<ul class="blank-list">
+			<li><span class="type-fx-icon type-fx-0">0</span>
+				No effect <span class="aside">(0%)</span>
+			<li><span class="type-fx-icon type-fx-50">&frac12;</span>
+				Not very effective <span class="aside">(50%)</span>
+			<li><span class="type-fx-icon type-fx-100">&nbsp;</span>
+				Normal <span class="aside">(100%)</span>
+			<li><span class="type-fx-icon type-fx-200">2</span>
+				Super-effective <span class="aside">(200%)</span>
+		</ul>
+
+		<h3>Downloads</h3>
+		<p>You can download the type chart as an image to print out and keep handy as you are playing and battling!
+		<p>
+		<a class="promo-box" href="http://img.pokemondb.net/images/typechart.png">
+			<i class="icon-pokeball"></i>
+			<span class="promo-box-line">Gen 6+ type chart</span>
+		</a><br>
+		<a class="promo-box" href="http://img.pokemondb.net/images/typechart-gen2345.png">
+			<i class="icon-pokeball"></i>
+			<span class="promo-box-line">Gen 2-5 type chart</span>
+		</a><br>
+		<a class="promo-box" href="http://img.pokemondb.net/images/typechart-gen1.png">
+			<i class="icon-pokeball"></i>
+			<span class="promo-box-line">Gen 1 type chart</span>
+		</a>
+
+		<dl>
+			<dt>See also:</dt>
+			<dd><a href="/type/dual">Dual type charts</a></dd>
+			<dd><a href="/type/old">Previous type charts</a></dd>
+		</dl>
+	</div>
+
+	<div class="col desk-span-8 lap-span-9">
+		<table class="type-table"><thead> <tr>  <th class="cell-nano">DEFENSE&nbsp;&#8594;<br>ATTACK&nbsp;&#8628;</th> <th><a class="type-abbr type-normal"  href="/type/normal"  title="Normal" >Nor</a></th> <th><a class="type-abbr type-fire"  href="/type/fire"  title="Fire" >Fir</a></th> <th><a class="type-abbr type-water"  href="/type/water"  title="Water" >Wat</a></th> <th><a class="type-abbr type-electric"  href="/type/electric"  title="Electric" >Ele</a></th> <th><a class="type-abbr type-grass"  href="/type/grass"  title="Grass" >Gra</a></th> <th><a class="type-abbr type-ice"  href="/type/ice"  title="Ice" >Ice</a></th> <th><a class="type-abbr type-fighting"  href="/type/fighting"  title="Fighting" >Fig</a></th> <th><a class="type-abbr type-poison"  href="/type/poison"  title="Poison" >Poi</a></th> <th><a class="type-abbr type-ground"  href="/type/ground"  title="Ground" >Gro</a></th> <th><a class="type-abbr type-flying"  href="/type/flying"  title="Flying" >Fly</a></th> <th><a class="type-abbr type-psychic"  href="/type/psychic"  title="Psychic" >Psy</a></th> <th><a class="type-abbr type-bug"  href="/type/bug"  title="Bug" >Bug</a></th> <th><a class="type-abbr type-rock"  href="/type/rock"  title="Rock" >Roc</a></th> <th><a class="type-abbr type-ghost"  href="/type/ghost"  title="Ghost" >Gho</a></th> <th><a class="type-abbr type-dragon"  href="/type/dragon"  title="Dragon" >Dra</a></th> <th><a class="type-abbr type-dark"  href="/type/dark"  title="Dark" >Dar</a></th> <th><a class="type-abbr type-steel"  href="/type/steel"  title="Steel" >Ste</a></th> <th><a class="type-abbr type-fairy"  href="/type/fairy"  title="Fairy" >Fai</a></th> </tr></thead><tbody> <tr>  <th><a class="type-icon-th type-normal"  href="/type/normal" >Normal</a></th><td title="Normal &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Rock = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Normal &#8594; Ghost = no effect" class="type-fx-cell type-fx-0">0</td><td title="Normal &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Normal &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Normal &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-fire"  href="/type/fire" >Fire</a></th><td title="Fire &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fire &#8594; Water = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fire &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Grass = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fire &#8594; Ice = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fire &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Bug = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fire &#8594; Rock = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fire &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Dragon = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fire &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fire &#8594; Steel = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fire &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-water"  href="/type/water" >Water</a></th><td title="Water &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Fire = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Water &#8594; Water = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Water &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Grass = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Water &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Ground = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Water &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Rock = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Water &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Dragon = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Water &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Steel = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Water &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-electric"  href="/type/electric" >Electric</a></th><td title="Electric &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Water = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Electric &#8594; Electric = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Electric &#8594; Grass = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Electric &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Ground = no effect" class="type-fx-cell type-fx-0">0</td><td title="Electric &#8594; Flying = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Electric &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Dragon = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Electric &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Steel = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Electric &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-grass"  href="/type/grass" >Grass</a></th><td title="Grass &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Water = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Grass &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Grass = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Poison = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Ground = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Grass &#8594; Flying = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Bug = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Rock = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Grass &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Dragon = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Grass &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Grass &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-ice"  href="/type/ice" >Ice</a></th><td title="Ice &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ice &#8594; Water = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ice &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Grass = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ice &#8594; Ice = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ice &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Ground = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ice &#8594; Flying = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ice &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Dragon = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ice &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ice &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ice &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-fighting"  href="/type/fighting" >Fighting</a></th><td title="Fighting &#8594; Normal = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fighting &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Ice = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fighting &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Poison = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fighting &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Flying = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fighting &#8594; Psychic = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fighting &#8594; Bug = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fighting &#8594; Rock = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fighting &#8594; Ghost = no effect" class="type-fx-cell type-fx-0">0</td><td title="Fighting &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fighting &#8594; Dark = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fighting &#8594; Steel = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fighting &#8594; Fairy = not very effective" class="type-fx-cell type-fx-50">&frac12;</td> </tr> <tr>  <th><a class="type-icon-th type-poison"  href="/type/poison" >Poison</a></th><td title="Poison &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Grass = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Poison &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Poison = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Poison &#8594; Ground = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Poison &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Rock = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Poison &#8594; Ghost = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Poison &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Poison &#8594; Steel = no effect" class="type-fx-cell type-fx-0">0</td><td title="Poison &#8594; Fairy = super-effective" class="type-fx-cell type-fx-200">2</td> </tr> <tr>  <th><a class="type-icon-th type-ground"  href="/type/ground" >Ground</a></th><td title="Ground &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Fire = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ground &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Electric = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ground &#8594; Grass = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ground &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Poison = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ground &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Flying = no effect" class="type-fx-cell type-fx-0">0</td><td title="Ground &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Bug = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ground &#8594; Rock = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ground &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ground &#8594; Steel = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ground &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-flying"  href="/type/flying" >Flying</a></th><td title="Flying &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Electric = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Flying &#8594; Grass = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Flying &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Fighting = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Flying &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Bug = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Flying &#8594; Rock = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Flying &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Flying &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Flying &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-psychic"  href="/type/psychic" >Psychic</a></th><td title="Psychic &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Fighting = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Psychic &#8594; Poison = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Psychic &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Psychic = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Psychic &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Psychic &#8594; Dark = no effect" class="type-fx-cell type-fx-0">0</td><td title="Psychic &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Psychic &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-bug"  href="/type/bug" >Bug</a></th><td title="Bug &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Grass = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Bug &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Fighting = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Poison = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Flying = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Psychic = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Bug &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Ghost = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Bug &#8594; Dark = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Bug &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Bug &#8594; Fairy = not very effective" class="type-fx-cell type-fx-50">&frac12;</td> </tr> <tr>  <th><a class="type-icon-th type-rock"  href="/type/rock" >Rock</a></th><td title="Rock &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Fire = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Rock &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Ice = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Rock &#8594; Fighting = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Rock &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Ground = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Rock &#8594; Flying = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Rock &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Bug = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Rock &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Rock &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Rock &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-ghost"  href="/type/ghost" >Ghost</a></th><td title="Ghost &#8594; Normal = no effect" class="type-fx-cell type-fx-0">0</td><td title="Ghost &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Psychic = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ghost &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Ghost = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Ghost &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Dark = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Ghost &#8594; Steel = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Ghost &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr> <tr>  <th><a class="type-icon-th type-dragon"  href="/type/dragon" >Dragon</a></th><td title="Dragon &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Dragon = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Dragon &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dragon &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Dragon &#8594; Fairy = no effect" class="type-fx-cell type-fx-0">0</td> </tr> <tr>  <th><a class="type-icon-th type-dark"  href="/type/dark" >Dark</a></th><td title="Dark &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Fire = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Fighting = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Dark &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Psychic = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Dark &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Ghost = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Dark &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Dark = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Dark &#8594; Steel = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Dark &#8594; Fairy = not very effective" class="type-fx-cell type-fx-50">&frac12;</td> </tr> <tr>  <th><a class="type-icon-th type-steel"  href="/type/steel" >Steel</a></th><td title="Steel &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Steel &#8594; Water = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Steel &#8594; Electric = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Steel &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Ice = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Steel &#8594; Fighting = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Poison = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Rock = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Steel &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Dragon = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Dark = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Steel &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Steel &#8594; Fairy = super-effective" class="type-fx-cell type-fx-200">2</td> </tr> <tr>  <th><a class="type-icon-th type-fairy"  href="/type/fairy" >Fairy</a></th><td title="Fairy &#8594; Normal = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Fire = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fairy &#8594; Water = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Electric = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Grass = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Ice = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Fighting = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fairy &#8594; Poison = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fairy &#8594; Ground = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Flying = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Psychic = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Bug = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Rock = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Ghost = normal effectiveness" class="type-fx-cell type-fx-100"></td><td title="Fairy &#8594; Dragon = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fairy &#8594; Dark = super-effective" class="type-fx-cell type-fx-200">2</td><td title="Fairy &#8594; Steel = not very effective" class="type-fx-cell type-fx-50">&frac12;</td><td title="Fairy &#8594; Fairy = normal effectiveness" class="type-fx-cell type-fx-100"></td> </tr></tbody></table>	</div>
+
+</div>
+
+
+<h2>Type chart changes</h2>
+
+<p>The majority of the type chart has remained the same over the years, but there have been a few changes. In Generation 2, Dark and Steel types were added, while in Generation 6 (<a href="/x-y">Pokémon X and Pokémon Y</a>) the Fairy type was added. Below are the differences compared to the current type chart. The charts can be seen on the <a href="/type/old">Old Type Charts</a> page.
+
+<h3>Generation 2-5</h3>
+
+<ul>
+	<li>There was no <strong>Fairy</strong> type.
+	<li><strong>Ghost</strong> and <strong>Dark</strong> type moves were not very effective against <strong>Steel</strong> type Pokémon. From Generation 6 they do neutral damage.
+</ul>
+
+<h3>Generation 1</h3>
+
+<ul>
+	<li>There were no <strong>Dark</strong> or <strong>Steel</strong> types.
+	<li><strong>Ghost</strong>-type moves had no effect on <strong>Psychic</strong> Pokémon. (Note
+		that this only affected <a href="/move/lick">Lick</a> as <a href="/move/confuse-ray">Confuse Ray</a>
+		and <a href="/move/night-shade">Night Shade</a> affected all Pokémon equally.)<br>
+		<small class="aside">This was supposedly a mistake in the programming: several game guides stated that Ghost was
+		super-effective on Psychic, and an in-game trainer at Saffron City says that <q>Psychic Pokémon
+		fear only ghosts and bugs!</q>  It was corrected in Generation 2 when Ghost became super-effective
+		against Psychic.</small>
+	<li><strong>Bug</strong> was super-effective on <strong>Poison</strong> and vice-versa. This was changed so
+		that Bug is now not very effective against Poison, and Poison now does regular damage against Bug.
+	<li><strong>Bug</strong> was regularly effective against <strong>Ghost</strong>. Now it is not very effective.
+	<li><strong>Ice</strong> type moves were regularly effective against <strong>Fire</strong> type Pokémon. Now
+		they are not very effective.
+</ul>
+
+<div class="ad-responsive">
+	<style>
+  .adresp-footer { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-footer { width: 728px; height: 90px; } }
+</style>
+<!-- Pokemon [responsive] - footer -->
+<ins class="adsbygoogle adresp-footer"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="9080564600"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+</article>
+
+<footer class="grid-wrapper">
+	<span class="footer-links"><a href="/about#privacy">Privacy Policy</a></span>
+	<span class="footer-copyright">
+		All written content &copy; Pokémon Database, 2008-2014.
+		Pokémon images/names © 1995-2013 Nintendo/Game Freak.
+	</span>
+</footer>
+
+<!--[if lt IE 9]>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+<!--[if gte IE 9]><!-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!--<![endif]-->
+<script>window.jQuery || document.write('<script src="/static/js/dev/jquery-1.10.1.min.js"><\/script>')</script>
+
+<script src="/static/js/base.33.js"></script>
+
+
+</body>
+</html>

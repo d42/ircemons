@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pokémon abilities list | Pokémon Database</title>
+
+	<link rel="stylesheet" href="/static/css/min/pokemondb.13.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="description" content="Information about abilities in the Pokémon games and a list of applicable Pokémon for each ability.">
+	<link rel="canonical" href="http://pokemondb.net/ability">
+
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+	<link rel="alternate" type="application/rss+xml" href="http://pokemondb.net/news/feed" title="The Pokemon Database newsfeed">
+
+	<!--[if lt IE 9]>
+	<script src="/static/js/html5shiv.js"></script>
+	<link rel="stylesheet" href="/static/css/ie.css">
+	<![endif]-->
+
+	<script>
+	var _gaq = [['_setAccount', 'UA-1974891-7'],['_trackPageview']];
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'http://www.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+	<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+
+<header class="grid-wrapper">
+	<a class="header-logo" href="/">Pokémon Database</a>
+
+	<form method="get" action="/search" class="sitesearch-form">
+		<input type="text" name="q" id="sitesearch" autocomplete="off" placeholder="Enter keywords" class="sitesearch-input">
+		<button type="submit" class="sitesearch-btn">Search</button>
+		<div id="sitesearch-results" class="sitesearch-results"></div>
+	</form>
+</header>
+
+
+<nav class="main-menu grid-wrapper">
+<ul class="main-menu-list">
+	<li><a href="/sitemap">Pokémon data</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokedex">Pokédex</a>
+			<li><a href="/move">Moves</a>
+			<li><a href="/type">Type chart</a>
+			<li><a href="/ability">Abilities</a>
+			<li><a href="/item">Items</a>
+			<li><a href="/evolution">Evolution chains</a>
+			<li><a href="/location">Pokémon locations</a>
+			<li><a href="/sprites">Sprite gallery</a>
+			<li><a href="/pokedex/all">Pokémon stats</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Game mechanics</a>
+		<ul class="main-menu-sub">
+			<li><a href="/mechanics/breeding">Breeding &amp; egg groups</a>
+			<li><a href="/mechanics/move-tutors">Move Tutors</a>
+			<li><a href="/type/dual">Dual type chart</a>
+			<li><a href="/ev">Effort Values (EVs)</a>
+			<li><a href="/mechanics/natures">Natures</a>
+			<li><a href="/mechanics/hidden">IVs/Personality</a>
+			<li class="hr-title">Useful tools
+			<li><a href="/tools/moveset-search">Moveset searcher</a>
+			<li><a href="/tools/type-coverage">Type coverage checker</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Pokémon games</a>
+		<ul class="main-menu-sub">
+			<li><a href="/x-y">X &amp; Y</a>
+			<li class="hr">
+			<li><a href="/black-white-2">Black 2 &amp; White 2</a>
+			<li><a href="/black-white">Black &amp; White</a>
+			<li class="hr">
+			<li><a href="/heartgold-soulsilver">HeartGold &amp; SoulSilver</a>
+			<li><a href="/platinum">Platinum</a>
+			<li><a href="/diamond-pearl">Diamond &amp; Pearl</a>
+			<li class="hr">
+			<li><a href="/emerald">Emerald</a>
+			<li><a href="/firered-leafgreen">FireRed &amp; LeafGreen</a>
+			<li><a href="/ruby-sapphire">Ruby &amp; Sapphire</a>
+			<li class="hr">
+			<li><a href="/crystal">Crystal</a>
+			<li><a href="/gold-silver">Gold &amp; Silver</a>
+			<li class="hr">
+			<li><a href="/yellow">Yellow</a>
+			<li><a href="/red-blue">Red &amp; Blue</a>
+			<li class="hr">
+			<li><a href="/spinoff/pokemon-bank">Pokémon Bank</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Community</a>
+		<ul class="main-menu-sub">
+			<li><a href="/pokebase/">Pokémon Q&amp;A</a>
+			<li><a href="/pokebase/rmt">Pokémon Rate My Team</a>
+			<li><a href="/pokebase/chat">Chat Room</a>
+			<li><a href="/pokebase/meta/">Meta (Suggestion Box)</a>
+		</ul>
+	</li>
+	<li><a href="/sitemap">Other information</a>
+		<ul class="main-menu-sub">
+			<li><a href="/">Pokémon News (home page)</a>
+			<li><a href="/maps">Maps/Puzzles</a>
+			<li><a href="/events">Pokémon events &amp; passwords</a>
+			<li><a href="/etymology">Pokémon name origins</a>
+			<li><a href="/glossary">Pokémon dictionary</a>
+			<li><a href="/about">About/Contact us</a>
+			<li class="hr-title">Quick links
+			<li><a href="/pokedex/national">Full Pokémon list</a>
+			<li><a href="/pokedex/game/black-white-2">Black 2 &amp; White 2 Pokédex</a>
+			<li><a href="/pokedex/game/black-white">Black &amp; White Pokédex</a>
+		</ul>
+	</li>
+</ul>
+</nav>
+
+<article class="main-content grid-wrapper">
+
+<h1>Pokémon abilities</h1>
+
+<div class="intro">
+	<p>Each ability from the latest generation of Pokémon games is listed below, along with a short
+	description and how many Pokémon can have that ability. Click an ability name to see the Pokémon
+	that can learn it.
+	<p class="small">For new abilities from the upcoming games, see the <a href="/x-y">Pokemon X&amp;Y</a> page.
+
+		<div class="share-icons">
+		<i class="share-blurb">Share this page:</i>
+		<a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fpokemondb.net%2Fability&amp;t=Pok%C3%A9mon+abilities+list"
+			class="icon-facebook" title="Share on Facebook" target="_blank">Facebook</a>
+		<a href="http://twitter.com/share?url=http%3A%2F%2Fpokemondb.net%2Fability&amp;text=Pok%C3%A9mon+abilities+list+%28via+%40pokemondb%29+"
+			class="icon-twitter" title="Tweet this page" target="_blank">Twitter</a>
+		<a href="https://plus.google.com/share?url=http%3A%2F%2Fpokemondb.net%2Fability"
+			class="icon-gplus" title="Share on Google+" target="_blank">Google+</a>
+		<a href="mailto:?subject=Pokemon+link&amp;body=Check+out+this+cool+Pokemon+page%21%0A%0APok%C3%A9mon+abilities+list%0Ahttp%3A%2F%2Fpokemondb.net%2Fability"
+			class="icon-email" title="Email this page" target="_blank">Email</a>
+	</div>
+	</div>
+
+
+<div class="ad-responsive">
+	<style>
+  .adresp-leaderboard { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-leaderboard { width: 728px; height: 90px; } }
+</style>
+<!-- Pokemon [responsive] - leaderboard, text -->
+<ins class="adsbygoogle adresp-leaderboard"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="5568695004"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+<div class="colset">
+	<div class="col span-4">
+		<h2>About Pokémon abilities</h2>
+
+		<p>Abilities, introduced in Generation III, are special attributes given to each Pokémon that can aid them in battle. Many abilities act as a <q>power-up</q> by increasing a move or stat; others introduce a third-party effect like a weather condition. Some abilities can even hinder a Pokémon battle.
+		<p>Each Pokémon can have only one ability, however, some have the option of two different abilities. The choice is random and each ability is equally likely. There are 308 <q>single-ability</q> Pokémon and 355 <q>dual-ability</q> Pokémon.
+		<p>In <a href="/black-white">Pokémon Black &amp; White</a>, a third <q>hidden</q> ability was introduced. The third ability is only available when a Pokémon is returned from the <em>Dream World</em>, a new online feature that is part of the Pokémon Global Link. 568 Pokémon have a <em>Dream World</em> ability.
+
+		<h2>Interesting questions</h2>
+		<p>A selection of related questions from <a href="/pokebase/">PokéBase</a>:
+
+		<ul>
+			<li><a href="http://pokemondb.net/pokebase/1350/what-abilities-have-overworld-effects">What abilities have overworld effects?</a></li>
+			<li><a href="http://pokemondb.net/pokebase/11763/which-abilities-affect-the-type-chart">Which abilities affect the type chart?</a></li>
+			<li><a href="http://pokemondb.net/pokebase/7592/what-is-the-point-of-truant">What is the point of Truant?</a></li>
+			<li><a href="http://pokemondb.net/pokebase/6879/what-useful-about-the-ability-storm-drain-and-lightningrod">What is useful about Storm Drain and Lightningrod?</a></li>
+		</ul>
+	</div>
+
+	<div class="col span-8">
+		<h2>The ability list</h2>
+
+		<div class="table-filters">
+			<label for="filter-ability-name">Filter:</label>
+			<input type="text" class="input-text" id="filter-ability-name" data-filter-col="0,2">
+
+			<label for="filter-ability-gen">Gen:</label>
+			<select id="filter-ability-gen" data-filter-col="3">
+				<option value="">- Any -</option>
+				<option value="3">Generation III</option>
+				<option value="4">Generation IV</option>
+				<option value="5">Generation V</option>
+			</select>
+		</div>
+
+		<table id="abilities" class="data-table wide-table">
+		<thead>
+			<tr>
+				<th class="sorting" data-sort="string" ><div class="sortwrap">Name</div></th> <th class="sorting" data-sort="int" ><div class="sortwrap">Pokémon</div></th> <th ><div class="sortwrap">Description</div></th> <th class="sorting" data-sort="int" ><div class="sortwrap">Gen.</div></th> 			</tr>
+		</thead>
+		<tbody>
+					<tr>
+				<td><a class="ent-name" href="/ability/adaptability">Adaptability</a></td>
+				<td class="num-total">9</td>
+				<td>Powers up moves of the same type.</td>
+				<td class="num">4</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/aerialate">Aerialate</a></td>
+				<td class="num-total">1</td>
+				<td>Turns Normal-type moves into Flying-type moves.</td>
+				<td class="num">6</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/aftermath">Aftermath</a></td>
+				<td class="num-total">8</td>
+				<td>Damages the attacker landing the finishing hit.</td>
+				<td class="num">4</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/air-lock">Air Lock</a></td>
+				<td class="num-total">1</td>
+				<td>Eliminates the effects of weather.</td>
+				<td class="num">3</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/analytic">Analytic</a></td>
+				<td class="num-total">12</td>
+				<td>Boosts move power when the Pokémon moves last.</td>
+				<td class="num">5</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/anger-point">Anger Point</a></td>
+				<td class="num-total">7</td>
+				<td>Maxes Attack after taking a critical hit.</td>
+				<td class="num">4</td>
+			</tr>
+					<tr>
+				<td><a class="ent-name" href="/ability/anticipation">Anticipation</a></td>
+				<td class="num-total">10</td>
+				<td>Senses a foe's dangerous moves.</td>
+				<td class="num">4</td>
+			</tr>
+				</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="ad-responsive">
+	<style>
+  .adresp-footer { width: 320px; height: 50px; margin-left: -5px; }
+  @media(min-width: 795px) { .adresp-footer { width: 728px; height: 90px; } }
+</style>
+<!-- Pokemon [responsive] - footer -->
+<ins class="adsbygoogle adresp-footer"
+  style="display:inline-block"
+  data-ad-client="ca-pub-4942990752504243"
+  data-ad-slot="9080564600"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+</article>
+
+<footer class="grid-wrapper">
+	<span class="footer-links"><a href="/about#privacy">Privacy Policy</a></span>
+	<span class="footer-copyright">
+		All written content &copy; Pokémon Database, 2008-2014.
+		Pokémon images/names © 1995-2013 Nintendo/Game Freak.
+	</span>
+</footer>
+
+<!--[if lt IE 9]>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+<!--[if gte IE 9]><!-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!--<![endif]-->
+<script>window.jQuery || document.write('<script src="/static/js/dev/jquery-1.10.1.min.js"><\/script>')</script>
+
+<script src="/static/js/base.33.js"></script>
+
+<script>
+
+$(function () {
+	var $table = $('.data-table');
+	// set up table sorting
+	$table.stupidtable(stblDataTypes);
+	$('thead th:first-child', $table).click();
+	// table filtering
+	$table.filtable({ controlPanel: $('.table-filters') });
+});
+
+</script>
+
+</body>
+</html>

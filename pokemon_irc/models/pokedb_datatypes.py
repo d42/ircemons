@@ -25,13 +25,13 @@ types = UserList([
 ])
 
 
-entry_defaults = ['', '', 0, 0, 0, 0, 0, 0, 0, 0]
+entry_defaults = [0, '', [], 0, 0, 0, 0, 0, 0, 0]
 entry = namedtuple(
     'pokemon',
     [
+        'id',
         'name',
         'type',
-        'id',
         'total',
         'hp',
         'attack',
@@ -42,7 +42,7 @@ entry = namedtuple(
     ]
 )
 
-move_defaults = ['', '', '',  0, 0, 0, 0, '', 0]
+move_defaults = ['', '', '',  0, 0, 0, '', '', 0]
 move = namedtuple(
     'move',
     [
@@ -59,7 +59,7 @@ move = namedtuple(
 )
 
 
-ability_defaults = ['', 0, 0]
+ability_defaults = ['', 0, '', 0]
 ability = namedtuple(
     "ability",
     [

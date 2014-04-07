@@ -11,7 +11,13 @@ def get_columns(row, datatype):
 
     def get(e, d):
         if not e: return d
-        return e[0].strip()
+        if type(d) == list: # such list wow 
+            return [e[0].strip()] if len(e) == 1 else e
+
+        if type(d) == int:
+            return e[0].strip() if e[0].strip() == '-' else int(e[0])
+
+        return type(d)(e[0].strip())
 
     for (col, val) in zip_longest(row, datatype.defaults):
         ret_list.append(get(col.xpath('.//text()'), val))
