@@ -13,40 +13,133 @@ Session = sessionmaker(bind=orm.engine)
 session = Session()
 
 
-def types_to_orm(typedict):
-    session.add_all([orm.Type(name=t) for t in types])
+
+# derp?
+def orm_wrapper(func):
+    def inner(*args):
+        derp = {}
+        func(*args, d=derp)
+        session.commit()
+        return derp
+
+    return inner
+
+
+@orm_wrapper
+def type_to_db(types, d):
+    for t in types:
+        o = orm.Type(name=t)
+        d[t] = o
+        session.add(o)
+
+
+@orm_wrapper
+def category_to_db(categories, d):
+    for c in categories:
+        o = orm.MoveCategory(name=c)
+        d[c] = o
+        session.add(o)
+
+
+def damagetype_to_db(typedict, types=types):
+    type_orm = type_to_db(types)
+
+    added = set()
+    for t1, t2 in ((t1, t2) for t1 in typedict for t2 in typedict[t1]):
+        if (t1, t2) in added: continue
+        added.add((t1, t2))
+        a, b = type_orm[t1], type_orm[t2]
+        dmg = typedict[t1][t2]
+
+        if not dmg:
+            continue
+
+        ot = orm.DamageTypesRelation(attack=a.id, defence=b.id, dmg=dmg)
+        session.add(ot)
+
     session.commit()
+
+
+@orm_wrapper
+def effects_to_db(effects, d):
+    for e in effects:
+        o = orm.Effect(description=e)
+        d[e] = o
+        session.add(o)
+
+
+@orm_wrapper
+def moves_to_db(moves, d):
+    moves = [x for x in moves]
+    effects = set(x.effect for x in moves)
+    category_orm = category_to_db(set(x.category for x in moves))
+    effect_orm = effects_to_db(effects)
+
+    type_id = {x.name: x.id for x in session.query(orm.Type).all()}
+
+    for m in moves:
+        c = m.category
+        t = m.type.lower()
+        e = m.effect
+
+        t = orm.Move(
+            type=type_id[t],
+            category=category_orm[c].id,
+            power=m.power,
+            accuracy=m.accuracy,
+            pp=m.pp,
+            effect=effect_orm[e].id,
+        )
+        session.add(t)
+
+
+@orm_wrapper
+def pokemons_to_db(entries, d):
+
+    type_id = {x.name: x.id for x in session.query(orm.Type).all()}
+            
+    for e in entries:
+
+        et = orm.Pokemon(
+            id=e.id,
+            name=e.name,
+            hp=e.hp,
+            attack=e.attack,
+            defence=e.defence,
+            special_attack=e.special_attack,
+            special_defence=e.special_defence,
+            speed=e.speed,
+        )
+        session.add(et)
+
+        for t in e.types:
+            tt = orm.PokemonType(pokemon_id=e.id, type_id=type_id[t.lower()])
+            session.add(tt)
 
 
 
 
 datatypes = {
-    #("moves.csv", move, moves_to_orm),
-    #("pokemons.csv", entry, pokemons_to_orm),
-    #("abilities.csv", ability, abilities_to_orm),
+    ("moves.csv", move, moves_to_db),
+    ("pokemons.csv", entry, pokemons_to_db),
+    #("abilities.csv", ability, abilities_to_db),
 }
 
 # XXX: Too lazy to make it more generic
 speshul_datatypes = [
-    ("types.csv", types, poke_get_type_damage, types_to_orm)
+    ("types.csv", types, poke_get_type_damage, damagetype_to_db)
 ]
 
 
 def main():
-    for file, datatype, func, orm_func in speshul_datatypes: #TODO: better naming
+    for file, datatype, func, orm_func in speshul_datatypes:  # TODO: better naming
         logging.info("downloading %s content..." % file)
         orm_func(func(datatype))
 
-    #for (file, datatype) in datatypes:
-        #logging.info("downloading %s content..." % file)
-        #with open(file, 'w') as file:
-            #writer = csv.writer(file)
-            #writer.writerows(poke_get(datatype))
+    for (file, datatype, orm_func) in datatypes:
+        logging.info("downloading %s content..." % file)
+        orm_func(poke_get(datatype))
 
-
-
-    #with open("file")
-    #poke_get_type_matrix()
 
 if __name__ == '__main__':
     main()

@@ -31,11 +31,11 @@ entry = namedtuple(
     [
         'id',
         'name',
-        'type',
+        'types',
         'total',
         'hp',
         'attack',
-        'defense',
+        'defence',
         'special_attack',
         'special_defence',
         'speed'
@@ -73,7 +73,7 @@ triples = [
     [ability, ability_defaults, settings.POKEDB_ABILITIES_URL],
     [move, move_defaults, settings.POKEDB_MOVES_URL],
     [entry, entry_defaults, settings.POKEDB_POKEMON_URL],
-    [types, [1] * len(types), settings.POKEDB_TYPE_CHART_URL]
+    [types, [1.0] * len(types), settings.POKEDB_TYPE_CHART_URL]
 ]
 for type, d, url in triples:
     type.defaults = d

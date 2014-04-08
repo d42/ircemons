@@ -8,16 +8,24 @@ import lxml.html
 
 def get_columns(row, datatype):
     ret_list = []
+    specials = {'½': 0.5, '2': 2, '0': 0, '∞': 9001, '-': 9002}
 
     def get(e, d):
-        if not e: return d
-        if type(d) == list: # such list wow 
-            return [e[0].strip()] if len(e) == 1 else e
+        if not e:
+            return d
+
+        e0 = e[0].strip()
+
+        if type(d) == list:
+            return [e0] if len(e) == 1 else e
 
         if type(d) == int:
-            return e[0].strip() if e[0].strip() == '-' else int(e[0])
+            return int(specials.get(e0, e0))
 
-        return type(d)(e[0].strip())
+        if type(d) == float:
+            return float(specials.get(e0, e0))
+
+        return type(d)(e0)
 
     for (col, val) in zip_longest(row, datatype.defaults):
         ret_list.append(get(col.xpath('.//text()'), val))
@@ -46,12 +54,13 @@ def poke_get_type_damage(datatype):
         return get_columns(row, datatype)
 
     matrix = [parse_row(row[1:]) for row in tree.xpath('//tbody/tr')]
-    damage = defaultdict(set)
-    damage_translation = {'½': 0.5, '2': 2, '0': 0}
+    damage = defaultdict(dict)
 
     for (i, j) in product(range(len(datatype)), repeat=2):
         val = matrix[i][j]
-        if val == 1: continue
+        if val == 1:
+            continue
+
         typei, typej = datatype[i], datatype[j]
-        damage[typei].add((typej, damage_translation.get(val, 1)))
+        damage[typei][typej] = val
     return damage
