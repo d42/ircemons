@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 from sqlalchemy import create_engine, Column, Integer, String,\
-    ForeignKey, Float, Date, Numeric, Table
+    ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from settings import DATABASE_URI
@@ -14,25 +14,42 @@ engine = create_engine(DATABASE_URI)
 class PokemonType(Base):
     __tablename__ = "pokemon_type"
     id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('pokemon.id')),
+    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
     type_id = Column(Integer, ForeignKey('type.id'))
+
+
+class PokemonMove(Base):
+    __tablename__ = "pokemon_move"
+    id = Column(Integer, primary_key=True)
+    level = Column(Integer, nullable=False)
+    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
+    move_id = Column(Integer, ForeignKey('move.id'))
+
+
+
+class KnownMove(Base):
+    __tablename__ = "known_move"
+    id = Column(Integer, primary_key=True)
+    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
+    move_id = Column(Integer, ForeignKey('move.id'))
+
 
 
 class DefaultColumns:
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True)
+    name = Column(String(50), unique=True, nullable=False)
 
 
 class Pokemon(Base, DefaultColumns):
     __tablename__ = 'pokemon'
-    # type = Column(Integer, ForeignKey("type.id"))
     types = relationship("Type", secondary="pokemon_type")
-    hp = Column(Integer)
-    attack = Column(Integer)
-    defence = Column(Integer)
-    special_attack = Column(Integer)
-    special_defence = Column(Integer)
-    speed = Column(Integer)
+    moves = relationship("Move", secondary="pokemon_move")
+    hp = Column(Integer, nullable=False)
+    attack = Column(Integer, nullable=False)
+    defence = Column(Integer, nullable=False)
+    special_attack = Column(Integer, nullable=False)
+    special_defence = Column(Integer, nullable=False)
+    speed = Column(Integer, nullable=False)
 
 
 class Type(Base, DefaultColumns):
@@ -46,7 +63,7 @@ class DamageTypesRelation(Base):
     defence = Column(Integer, ForeignKey("type.id"))
     # attack = relationship('Type')
     # defence = relationship('Type')
-    dmg = Column(Float)
+    dmg_mult = Column(Float, nullable=False)
 
 
 class MoveCategory(Base, DefaultColumns):
@@ -70,5 +87,21 @@ class Ability(Base, DefaultColumns):
 class Effect(Base, DefaultColumns):
     __tablename__ = 'effect'
     description = Column(String(150), unique=True)
+
+
+class PlayerPokemon(Base, DefaultColumns):
+    __tablename__ = "player_pokemon"
+    known_moves = relationship("Move", secondary="known_moves")
+    hp = Column(Integer, nullable=False)
+    attack = Column(Integer, nullable=False)
+    defence = Column(Integer, nullable=False)
+    special_attack = Column(Integer, nullable=False)
+    special_defence = Column(Integer, nullable=False)
+    speed = Column(Integer, nullable=False)
+
+
+class Player(Base, DefaultColumns):
+    __tablename__ = "player"
+
 
 Base.metadata.create_all(engine)

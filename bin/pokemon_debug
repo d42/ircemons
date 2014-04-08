@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+
+from pokemon_irc.debug import *
+from builtins import EOFError
+from collections import deque
+
+
+def parse_command(line):
+    line = deque(line)
+    state = debug_functions
+    while line:
+        state = state[line.popleft()]
+        if hasattr(state, '__call__'):
+            state(*line) # TODO: try except
+            return
+    print("WAT R U DOIN STAHP")
+
+
+def main():
+    histfile = '.pokedebug_history'
+    while True:
+        try:
+            line = input("> ")
+            line = line.split()
+            parse_command(line)
+
+        except EOFError:
+            return
+
+if __name__ == '__main__':
+    main()

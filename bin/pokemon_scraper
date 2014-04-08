@@ -44,17 +44,14 @@ def category_to_db(categories, d):
 def damagetype_to_db(typedict, types=types):
     type_orm = type_to_db(types)
 
-    added = set()
     for t1, t2 in ((t1, t2) for t1 in typedict for t2 in typedict[t1]):
-        if (t1, t2) in added: continue
-        added.add((t1, t2))
         a, b = type_orm[t1], type_orm[t2]
         dmg = typedict[t1][t2]
 
         if not dmg:
             continue
 
-        ot = orm.DamageTypesRelation(attack=a.id, defence=b.id, dmg=dmg)
+        ot = orm.DamageTypesRelation(attack=a.id, defence=b.id, dmg_mult=dmg)
         session.add(ot)
 
     session.commit()
@@ -98,10 +95,12 @@ def pokemons_to_db(entries, d):
 
     type_id = {x.name: x.id for x in session.query(orm.Type).all()}
             
+    added = set()
     for e in entries:
+        if e.name in added: continue
+        added.add(e.name)
 
         et = orm.Pokemon(
-            id=e.id,
             name=e.name,
             hp=e.hp,
             attack=e.attack,
@@ -117,27 +116,31 @@ def pokemons_to_db(entries, d):
             session.add(tt)
 
 
+@orm_wrapper
+def abilities_to_db(abilities, d):
+    pass # TODO: not implemented so much
 
 
 datatypes = {
-    ("moves.csv", move, moves_to_db),
-    ("pokemons.csv", entry, pokemons_to_db),
-    #("abilities.csv", ability, abilities_to_db),
+    ("moves", move, moves_to_db),
+    ("pokemons", entry, pokemons_to_db),
+    ("abilities", ability, abilities_to_db),
 }
 
 # XXX: Too lazy to make it more generic
 speshul_datatypes = [
-    ("types.csv", types, poke_get_type_damage, damagetype_to_db)
+    ("types", types, poke_get_type_damage, damagetype_to_db)
 ]
 
 
 def main():
-    for file, datatype, func, orm_func in speshul_datatypes:  # TODO: better naming
-        logging.info("downloading %s content..." % file)
+    log_line = "downloading %s..."
+    for name, datatype, func, orm_func in speshul_datatypes:  # TODO: better naming
+        logging.info(log_line % file)
         orm_func(func(datatype))
 
-    for (file, datatype, orm_func) in datatypes:
-        logging.info("downloading %s content..." % file)
+    for (name, datatype, orm_func) in datatypes:
+        logging.info(log_line % file)
         orm_func(poke_get(datatype))
 
 
