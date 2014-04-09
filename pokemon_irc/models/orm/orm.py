@@ -26,13 +26,11 @@ class PokemonMove(Base):
     move_id = Column(Integer, ForeignKey('move.id'))
 
 
-
 class KnownMove(Base):
     __tablename__ = "known_move"
     id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
+    pokemon_id = Column(Integer, ForeignKey('player_pokemon.id'))
     move_id = Column(Integer, ForeignKey('move.id'))
-
 
 
 class DefaultColumns:
@@ -84,14 +82,15 @@ class Ability(Base, DefaultColumns):
     __tablename__ = 'ability'
 
 
-class Effect(Base, DefaultColumns):
+class Effect(Base):
     __tablename__ = 'effect'
+    id = Column(Integer, primary_key=True)
     description = Column(String(150), unique=True)
 
 
 class PlayerPokemon(Base, DefaultColumns):
     __tablename__ = "player_pokemon"
-    known_moves = relationship("Move", secondary="known_moves")
+    known_moves = relationship("Move", secondary="known_move")
     hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
     defence = Column(Integer, nullable=False)

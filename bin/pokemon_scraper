@@ -28,6 +28,7 @@ def orm_wrapper(func):
 @orm_wrapper
 def type_to_db(types, d):
     for t in types:
+        logging.debug("adding type: %s" % t)
         o = orm.Type(name=t)
         d[t] = o
         session.add(o)
@@ -36,6 +37,7 @@ def type_to_db(types, d):
 @orm_wrapper
 def category_to_db(categories, d):
     for c in categories:
+        logging.debug("adding category: %s" % c)
         o = orm.MoveCategory(name=c)
         d[c] = o
         session.add(o)
@@ -51,6 +53,7 @@ def damagetype_to_db(typedict, types=types):
         if not dmg:
             continue
 
+        logging.debug("adding damage relation: %s -> %s (%s)" % (a.name, b.name, dmg))
         ot = orm.DamageTypesRelation(attack=a.id, defence=b.id, dmg_mult=dmg)
         session.add(ot)
 
@@ -60,6 +63,7 @@ def damagetype_to_db(typedict, types=types):
 @orm_wrapper
 def effects_to_db(effects, d):
     for e in effects:
+        logging.debug("adding effect: %s" % e)
         o = orm.Effect(description=e)
         d[e] = o
         session.add(o)
@@ -75,12 +79,15 @@ def moves_to_db(moves, d):
     type_id = {x.name: x.id for x in session.query(orm.Type).all()}
 
     for m in moves:
+        logging.debug("adding move: %s" % m.name)
+        n = m.name
         c = m.category
         t = m.type.lower()
         e = m.effect
 
         t = orm.Move(
             type=type_id[t],
+            name=n,
             category=category_orm[c].id,
             power=m.power,
             accuracy=m.accuracy,
@@ -97,6 +104,7 @@ def pokemons_to_db(entries, d):
             
     added = set()
     for e in entries:
+        logging.debug("adding pokemon: %s" % e.name)
         if e.name in added: continue
         added.add(e.name)
 
@@ -136,11 +144,11 @@ speshul_datatypes = [
 def main():
     log_line = "downloading %s..."
     for name, datatype, func, orm_func in speshul_datatypes:  # TODO: better naming
-        logging.info(log_line % file)
+        logging.info(log_line % name)
         orm_func(func(datatype))
 
     for (name, datatype, orm_func) in datatypes:
-        logging.info(log_line % file)
+        logging.info(log_line % name)
         orm_func(poke_get(datatype))
 
 
