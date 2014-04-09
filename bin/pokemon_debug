@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+import readline
 from pokemon_irc.debug import *
 from builtins import EOFError
 from collections import deque
@@ -12,8 +13,7 @@ def parse_command(line):
     while line:
         state = state[line.popleft()]
         if hasattr(state, '__call__'):
-            state(*line) # TODO: try except
-            return
+            return state(*line) # TODO: try except
     print("WAT R U DOIN STAHP")
 
 
@@ -23,7 +23,7 @@ def main():
         try:
             line = input("> ")
             line = line.split()
-            parse_command(line)
+            print(parse_command(line))
 
         except EOFError:
             return

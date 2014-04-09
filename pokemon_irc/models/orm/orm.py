@@ -88,8 +88,11 @@ class Effect(Base):
     description = Column(String(150), unique=True)
 
 
-class PlayerPokemon(Base, DefaultColumns):
+class PlayerPokemon(Base):
     __tablename__ = "player_pokemon"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+    player_id = Column(Integer, ForeignKey('player.id'))
     known_moves = relationship("Move", secondary="known_move")
     hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
@@ -101,6 +104,8 @@ class PlayerPokemon(Base, DefaultColumns):
 
 class Player(Base, DefaultColumns):
     __tablename__ = "player"
+    pokemons = relationship("PlayerPokemon")
+
 
 
 Base.metadata.create_all(engine)
