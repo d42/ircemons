@@ -19,5 +19,8 @@ IRC_GM_NICK = "oakxDDDD"
 IRC_REALNAME = "oak xDDDD"
 IRC_OWNER = "DaZ"
 
+
+SOCKET_PATH = "pokeirc.sock"
+
 IRC_BATTLE_CHANNEL_TEMPLATE = "#{name1}_vs_{name2}_{battle_id}"
 

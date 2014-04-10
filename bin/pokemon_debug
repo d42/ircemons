@@ -5,6 +5,8 @@ import readline
 from pokemon_irc.debug import *
 from builtins import EOFError
 from collections import deque
+from pokemon_irc import settings
+import socket
 
 
 def parse_command(line):

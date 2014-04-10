@@ -3,8 +3,27 @@
 from pokemon_irc.irc import GMBot, PokeBot
 import argparse
 from pokemon_irc import settings
+import socket
+import os, os.path
 
 bot_list = {}
+
+
+def create_socket():
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    s.bind(settings.SOCKET_PATH)
+    s.listen(2)
+    s.settimeout(0.3)
+    return s
+
+
+def listen_socket(s):
+    try:
+        conn, addr = s.accept()
+        data = conn.recv(1024)
+        return str(data, encoding="utf-8") if data else False
+    except socket.timeout:
+        return False
 
 
 def create_pokemon(self, pokemon, bot_list=bot_list):
@@ -30,16 +49,28 @@ def delete_pokemon(self, pokemon, bot_list=bot_list):
 
 
 def main():
-    g = GMBot()
-    g.create_pokemon = create_pokemon
-    bot_list['GM'] = g
+    gm = GMBot()
+    gm.create_pokemon = create_pokemon
+    bot_list['GM'] = gm
+
+    if os.path.exists(settings.SOCKET_PATH):
+        os.remove(settings.SOCKET_PATH)
 
     for bot in bot_list.values():
         bot._connect()
 
+    s = create_socket()
+
     while True:
         for bot in bot_list.values():
             bot.ircobj.process_once()
+
+
+        data = listen_socket(s)
+        if data:
+            print(data)
+            channel, data = data.split(' ', 1)
+            gm.run(channel, data)
 
 
 if __name__ == '__main__':

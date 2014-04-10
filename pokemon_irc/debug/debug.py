@@ -4,7 +4,9 @@ from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
 from pokemon_irc.game import actions
 from pokemon_irc.exceptions.debug import debug_exception
-import settings
+from pokemon_irc import settings
+import socket
+from collections import deque
 
 
 def create_player(player_name):
@@ -25,6 +27,7 @@ def create_pokemon(player_id, pokemon_name):
     pp = orm.PlayerPokemon(
         name=("{}'s {}".format(name, p.name)),
         player_id=player_id,
+        base_pokemon_id=p.id,
         hp=p.hp,
         current_hp=p.hp,
         attack=p.attack,
@@ -129,6 +132,18 @@ def info_pokemon(pokemon_id):
     return '\n'.join("%s=%s" % (x, getattr(pokemon, x)) for x in params)
 
 
+def call_server(*tokens):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    s.connect(settings.SOCKET_PATH)
+    channel = settings.IRC_MAIN_CHANNEL,
+
+    s.sendall(bytes(' '.join(channel + tokens), encoding="utf-8"))
+    return "ok"
+
+
+def call_battle(*tokens):
+    pass
+
 debug_functions = {
     'create': {'pokemon': create_pokemon, 'player': create_player},
     'list': {'pokemons': list_pokemons, 'players': list_players, 'moves': list_moves},
@@ -137,4 +152,6 @@ debug_functions = {
     'del': {'pokemon': del_pokemon, 'player': del_player},
     'change': {'stat': change_stat},
     'evolve': evolve_pokemon,
+    'server': call_server,
+    'battle': call_battle
 }

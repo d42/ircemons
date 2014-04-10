@@ -9,7 +9,7 @@ from collections import deque
 class Authorization:
 
     def check_auth(self, user_name):
-        return True # TODO:
+        return user_name
 
 
 def get_nick(source):
@@ -73,11 +73,22 @@ class GMBot(irc.bot.SingleServerIRCBot):
     def on_welcome(self, c, e):
         c.join(self.channel)
 
-    def on_privmsg(self, c, e):
-        pass
-
     def on_privnotice(self, c, e):
         print(e.arguments)
+
+
+    def on_privmsg(self, c, e):
+        nick = get_nick(e.source)
+        tokens = deque(e.arguments[0].split())
+        nickserv_auth = self.auth.check_auth(nick)
+
+        if not nickserv_auth:
+            self.respond(nick, e.target, "auth to nickserv plx")
+            return
+        message = self.actions.query_run(nickserv_auth, tokens)
+
+        self.write(nick, message)
+
 
     def on_pubmsg(self, c, e):
         nick = get_nick(e.source)
@@ -86,12 +97,41 @@ class GMBot(irc.bot.SingleServerIRCBot):
         if dest != IRC_GM_NICK: return  # TODO:
 
         nickserv_auth = self.auth.check_auth(nick)
-        if not nickserv_auth: return
+
+        if not nickserv_auth:
+            self.respond(nick, e.target, "auth to nickserv plx")
+            return
 
         tokens = deque(message.split())
-        message = self.actions.run(nickserv_auth, tokens)
-        import ipdb; ipdb.set_trace()
+
+        # #channel_name
+        # ^ I don't like this :3
+
+        if e.target == IRC_MAIN_CHANNEL:
+            message = self.actions.main_channel_run(nickserv_auth, tokens)
+        else:
+            message = self.actions.battle_run(nickserv_auth, tokens)
+
         self.respond(nick, e.target, message)
+
+    def run(self, command, channel=None):
+        name = "motherfucking_admin"
+        tokens = deque(command.split())
+        if not channel:
+            message = self.actions.admin_run(tokens)
+
+        elif channel == IRC_MAIN_CHANNEL:
+            message = self.actions.main_channel_run(name, tokens)
+
+        else:
+            message = self.actions.battle_run(name, tokens)
+
+        self.write(channel, message)
+
+    def write(self, channel, message):
+        for line in message.split('\n'):
+            print("#%s %s: %s" % (channel, IRC_GM_NICK, line))
+            self.connection.privmsg(channel, line)
 
     def respond(self, nick, channel, message):
         print("#%s %s: %s" % (channel, nick, message))

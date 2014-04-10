@@ -83,6 +83,10 @@ class Move(Base, DefaultColumns):
     effect = Column(Integer, ForeignKey("effect.id"))
 
 
+    def __repr__(self):
+        return self.name
+
+
 class Ability(Base, DefaultColumns):
     __tablename__ = 'ability'
 
@@ -96,8 +100,8 @@ class Effect(Base):
 class PlayerPokemon(Base):
     __tablename__ = "player_pokemon"
     id = Column(Integer, primary_key=True)
-    base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
-    name = Column(String(50))
+    base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=False)
+    name = Column(String(50), nullable=False)
     xp = Column(Integer, default=0)
     level = Column(Integer, default=0) # do i need those separate ,_<
     player_id = Column(Integer, ForeignKey('player.id'))
