@@ -38,10 +38,15 @@ class DefaultColumns:
     name = Column(String(50), unique=True, nullable=False)
 
 
+    def __str__(self):
+        return "%s" % self.name
+
+
 class Pokemon(Base, DefaultColumns):
     __tablename__ = 'pokemon'
     types = relationship("Type", secondary="pokemon_type")
     moves = relationship("Move", secondary="pokemon_move")
+    player_pokemons = relationship("PlayerPokemon", backref="base_pokemon")
     hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
     defence = Column(Integer, nullable=False)
@@ -91,10 +96,14 @@ class Effect(Base):
 class PlayerPokemon(Base):
     __tablename__ = "player_pokemon"
     id = Column(Integer, primary_key=True)
+    base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
     name = Column(String(50))
+    xp = Column(Integer, default=0)
+    level = Column(Integer, default=0) # do i need those separate ,_<
     player_id = Column(Integer, ForeignKey('player.id'))
     known_moves = relationship("Move", secondary="known_move")
     hp = Column(Integer, nullable=False)
+    current_hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
     defence = Column(Integer, nullable=False)
     special_attack = Column(Integer, nullable=False)
@@ -104,7 +113,9 @@ class PlayerPokemon(Base):
 
 class Player(Base, DefaultColumns):
     __tablename__ = "player"
-    pokemons = relationship("PlayerPokemon")
+    pokemons = relationship("PlayerPokemon", backref="player")
+
+
 
 
 
