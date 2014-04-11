@@ -39,6 +39,8 @@ class PokemonMoveLevel(Base):
 
     move_id = Column(Integer, ForeignKey("move.id"))
     pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
+    derp = relationship("Pokemon", backref="move_level")
+    move = relationship("Move")
 
     level = Column(Integer)
 
