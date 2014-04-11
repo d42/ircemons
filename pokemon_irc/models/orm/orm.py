@@ -152,6 +152,8 @@ class PlayerPokemon(Base):
 class Player(Base, DefaultColumns):
     __tablename__ = "player"
     pokemons = relationship("PlayerPokemon", backref="player")
+    password = Column(String(16), nullable=False)  # TODO: different hashes and stuff
+    salt = Column(String(25), nullable=False)
     matches_won = Column(Integer, default=0, nullable=False)
     matches_total = Column(Integer, default=0, nullable=False)
     xp_total = Column(Integer, default=0, nullable=False)

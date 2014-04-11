@@ -1,9 +1,12 @@
 import irc.bot
 import irc.strings
+import logging
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 from pokemon_irc.settings import IRC_SERVER, IRC_PORT, IRC_MAIN_CHANNEL, IRC_GM_NICK, IRC_REALNAME, IRC_OWNER
 from pokemon_irc.game.actions import GMActions
-from collections import deque, defaultdict
+from collections import deque, defaultdict, namedtuple
+
+user = namedtuple('user', ['nick', 'real_name', 'hostname'])
 
 
 class Authorization:
@@ -12,23 +15,46 @@ class Authorization:
         return user_name
 
 
-def get_nick(source):
-    nick, host = source.split('!', 1)
-    if not host: raise('jp2gmd')
-    return nick
 
-auth = Authorization()
+# handle 330
 
 class PokeBot(irc.bot.SingleServerIRCBot):
-    def __init__(self, channel, nickname, realname=None, server=IRC_SERVER, port=IRC_PORT):
+    auth = Authorization()
 
-        if not realname:
-            realname = "herp derp"
+    def parse_source(self, source):
+        t = str.maketrans('!@', '  ')
+        u = user(*source.translate(t).split())
+        logging.debug(u)
+        return u
+
+    def ircify(self, nickname):
+        """ turn into valid irc nickname """
+        pass
+
+    def parse_command(self, message, name=None):
+        if not name: name = self.name
+
+        if message.startswith(self.name+':'):
+            command = message[len(self.name)+1:].strip()
+            logging.debug(command)
+            tokens = deque(command.split())
+
+            return tokens
+        return False
+    
+
+class PokemonBot(PokeBot):
+    def __init__(self, pokemon, battle, server=IRC_SERVER, port=IRC_PORT):
+
+        self.name = self.ircify(pokemon.name)
+        realname = pokemon.base_pokemon.name
+        self.channel = ircify(battle.name)
+    
+        irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], self.name, realname)
+
+
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
         self.channel = channel
-
-    #def on_nicknameinuse(self, c, e):
-        #c.nick(c.get_nickname() + "_")
 
     def on_welcome(self, c, e):
         c.join(self.channel)
@@ -52,8 +78,9 @@ class PokeBot(irc.bot.SingleServerIRCBot):
 
 
 
-class GMBot(irc.bot.SingleServerIRCBot):
-    auth = auth
+class GMBot(PokeBot):
+    auth_queue = deque()
+    authorized = {}
     pending_battles = defaultdict(dict)
     current_battles = defaultdict(dict)
 
@@ -64,6 +91,8 @@ class GMBot(irc.bot.SingleServerIRCBot):
         realname=IRC_REALNAME,
         server=IRC_SERVER,
         port=6667):
+
+        self.name = nickname
 
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
         self.channel = channel
@@ -97,33 +126,29 @@ class GMBot(irc.bot.SingleServerIRCBot):
 
 
     def on_pubmsg(self, c, e):
-        nick = get_nick(e.source)
+        user = self.parse_source(e.source)
+        tokens = self.parse_command(e.arguments[0])
 
-        message = e.arguments[0].split()
-        if not message: return 
-        dest = message[0]
+        if not tokens: return
 
-        if not dest.endswith(':') or dest[:-1] != IRC_GM_NICK: return
+        player = self.authorized.get((user.nick, user.hostname), False)
 
-        nickserv_auth = self.auth.check_auth(nick)
+        if player:
+            user.auth = player
 
-        if not nickserv_auth:
-            self.respond(nick, e.target, "auth to nickserv plx")
+        if not player and tokens[0] not in self.actions.public_actions:
+            self.respond(user.nick, e.target, "not authorized")
             return
 
-        tokens = deque(message[1:])
-
-        # #channel_name
-        # ^ I don't like this :3
-
         if e.target == IRC_MAIN_CHANNEL:
-            message = self.actions.main_channel_run(nickserv_auth, tokens)
+            message = self.actions.main_channel_run(user, tokens)
         else:
-            message = self.actions.battle_run(nickserv_auth, tokens)
+            message = self.actions.battle_run(user, tokens)
 
-        self.respond(nick, e.target, message)
+        self.respond(user.nick, e.target, message)
 
     def run(self, command, channel=None):
+        """ kind of motherfucking admin console """
         name = "motherfucking_admin"
         tokens = deque(command.split())
         if not channel:
@@ -159,11 +184,3 @@ class GMBot(irc.bot.SingleServerIRCBot):
 
     #def create_pokemon(self, create_func):
         #self.create_func(self, "pikachu")
-    
-
-    def do_command(self, e, cmd):
-        nick = e.source.nick
-        c = self.connection
-
-
-

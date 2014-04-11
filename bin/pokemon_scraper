@@ -170,21 +170,13 @@ def get_trees(datatype):
         session.commit()
 
 datatypes = [
-    #("types", types, poke_get_type_damage, damagetype_to_db),
-    #("moves", move, moves_to_db),
-    #("pokemons", entry, pokemons_to_db),
-    #("abilities", ability, abilities_to_db),
+    ("types", types, poke_get_type_damage, damagetype_to_db),
+    ("moves", move, moves_to_db),
+    ("pokemons", entry, pokemons_to_db),
+    ("abilities", ability, abilities_to_db),
     ("moves trees", move_level, get_trees, move_trees_to_db),
 ]
 
-# XXX: Too lazy to make it more generic
-speshul_datatypes = [
-]
-
-
-# scraping order:
-# 1) types
-# 2) moves
 
 def main():
     log_line = "downloading %s..."

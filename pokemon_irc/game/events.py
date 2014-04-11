@@ -1,7 +1,12 @@
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
+from string import ascii_letters, digits
+from random import SystemRandom
+import hashlib
 import logging
 
+random = SystemRandom()
+choice = random.choice
 
 progression_model = {
     'medium_fast': [(n**3) for n in range(101)],
@@ -32,12 +37,29 @@ def add_xp(pokemon_id, xp):
     return pokemon.level, pokemon.xp
 
 
-def create_player(player_name):
+def create_player(player_name, password):
     q = session.query(orm.Player).filter_by(name=player_name).first()
     if q: return "already registered"
-    session.add(orm.Player(name=player_name))
+
+    if len(password) < 5: return "dude..."
+
+    letters = ascii_letters + digits
+    salt = ''.join(choice(letters) for _ in range(25))
+    hashed_password = hashlib.md5( (salt+password).encode('utf-8') ).hexdigest()
+    session.add(orm.Player(name=player_name, salt=salt, password=hashed_password))
     session.commit()
     return "registered successfully"
+
+
+def authorize_player(player_name, password):
+    q = session.query(orm.Player).filter_by(name=player_name).first()
+    if not q: return "not registerd"
+
+    if hashlib.md5((q.salt + password).encode('utf-8')).hexdigest() == q.password:
+        return "authorized successfully"
+
+    return "wrong password"
+
 
 
 def create_pokemon(player_name, pokemon_name):

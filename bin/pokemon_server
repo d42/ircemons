@@ -5,6 +5,8 @@ import argparse
 from pokemon_irc import settings
 import socket
 import os, os.path
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 bot_list = {}
 
