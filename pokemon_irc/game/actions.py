@@ -7,7 +7,6 @@ import logging
 
 class GMActions:
 
-    current_matches = {}
 
     def __init__(self, GMBot):
         self.main_actions = {
@@ -34,7 +33,15 @@ class GMActions:
 
         self.gm = GMBot
 
+    def key_error_decorator(func):
+        def inner(*args):
+            try:
+                return func(*args)
+            except KeyError:
+                return "No such command"
+        return inner
 
+    @key_error_decorator
     def query_run(self, nickserv_auth, command_tokens):
         command_tokens = deque(command_tokens)
 
@@ -45,6 +52,7 @@ class GMActions:
                 return state(*command_tokens, player_name=nickserv_auth)
         return "something went wrong"
 
+    @key_error_decorator
     def admin_run(self, command_tokens):
         state = self.admin_actions
         while command_tokens:
@@ -53,6 +61,7 @@ class GMActions:
                 return state(*command_tokens, player_name=nickserv_auth)
         return False
 
+    @key_error_decorator
     def battle_run(self, nickserv_auth, command_tokens):
         state = self.battle_actions
         while command_tokens:
@@ -61,6 +70,7 @@ class GMActions:
                 return state(*command_tokens, player_name=nickserv_auth)
         return "something went wrong"
 
+    @key_error_decorator
     def main_channel_run(self, nickserv_auth, command_tokens):
         command_tokens = deque(command_tokens)
 
@@ -81,7 +91,13 @@ class GMActions:
         return ' '.join(message)
 
     def _challenge_player(self, challengee, player_name):
-        pass
+        if not self.gm.player_on_main_channel(challengee): return "You can't challenge someone who's not on the channel."
+
+
+
+        self.gm.write(challengee, "{} has challened you to a battle".format(player_name))
+
+        return "{} has been challenged".format(challengee)
 
     def _recall_pokemon(name, player_name, battle):
         pass
@@ -89,7 +105,16 @@ class GMActions:
     def _summon_pokemon(name, player_name, battle):
         pass
 
-    def _accept_challenge(self, challengee, player_name):
+    def _accept_challenge(self, challenger=None, player_name=None):
+        if not player_name: return "something went wrong"
+
+        pb = self.gm.pending_battles[player_name]
+        if not challenger:
+            if len(pb) != 1:
+                return "there's more than one request, specify player"
+            request = pb.popitem()
+            request.accept()
+            
         pass
 
     def _yield_match(self, challengee, player_name):

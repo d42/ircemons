@@ -4,42 +4,18 @@ from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
 from pokemon_irc.game import actions
 from pokemon_irc.exceptions.debug import debug_exception
+from pokemon_irc.game import events
 from pokemon_irc import settings
 import socket
 from collections import deque
 
 
 def create_player(player_name):
-    p = orm.Player(name=player_name)
-    session.add(p)
-    session.commit()
-
-    return "OK %s" % p.id
+    return events.create_player(player_name)
 
 
-def create_pokemon(player_id, pokemon_name):
-    name = session.query(orm.Player).filter_by(id=player_id).first().name
-    if not name: return "w0t m8"
-
-    n = pokemon_name.capitalize()
-    session.query()
-    p = session.query(orm.Pokemon).filter_by(name=n).first()
-    pp = orm.PlayerPokemon(
-        name=("{}'s {}".format(name, p.name)),
-        player_id=player_id,
-        base_pokemon_id=p.id,
-        hp=p.hp,
-        current_hp=p.hp,
-        attack=p.attack,
-        defence=p.defence,
-        special_attack=p.special_attack,
-        special_defence=p.special_defence,
-        speed=p.speed,
-    )
-    session.add(pp)
-    session.commit()
-
-    return "OK %s" % pp.id
+def create_pokemon(player_name, pokemon_name):
+    return events.create_pokemon(player_name, pokemon_name)
 
 
 def list_all_pokemons():
@@ -47,28 +23,25 @@ def list_all_pokemons():
     return "\n".join("%s %s" % (p.id, p.name) for p in pokemons)
 
 
-def list_pokemons(player_id=None):
-    if not player_id: return list_all_pokemons()
-    player = session.query(orm.Player).filter_by(id=player_id).first()
-    if not player:
-        return "No such player id"
-
-    return '\n'.join("%s %s" % (p.id, p.name) for p in player.pokemons)
+def list_pokemons(player_name=None):
+    if not player_name: return list_all_pokemons()
+    return events.list_pokemons(player_name)
 
 
 def list_players():
+
     for x in session.query(orm.Player).all():
         print(x.id, x.name)
-    pass
+    return  ''
 
 
 def list_all_moves():
     for move in session.query(orm.Move).all():
-        print(move.id, move.name)
+        print(move.id, move.name, move.effect, sep='\t')
 
 
-def list_moves(pokemon_id=None):
-    if not pokemon_id:
+def list_moves(pokemon_name=None):
+    if not pokemon_name:
         return list_all_moves()
 
     pokemon = session.query(orm.PlayerPokemon).filter_by(id=pokemon_id).first()
@@ -87,13 +60,7 @@ def add_move(pokemon_id, move_id):
 
 
 def del_pokemon(pokemon_id):
-    pokemon = session.query(orm.PlayerPokemon).filter_by(id=pokemon_id).first()
-    pokemon_name = pokemon.name
-
-    session.delete(pokemon)
-    session.commit()
-
-    return "{} faints".format(pokemon_name)
+    events.del_pokemon(pokemon_id)
 
 
 def del_player(player_id):
@@ -110,7 +77,7 @@ def del_player(player_id):
 
 def add_xp(pokemon_id, xp=100):
     xp = int(xp)
-    return '%s %s' % actions.add_xp(pokemon_id, xp)
+    return '%s %s' % events.add_xp(pokemon_id, xp)
 
 
 def evolve_pokemon(pokemon_id):

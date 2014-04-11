@@ -3,7 +3,7 @@ import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 from pokemon_irc.settings import IRC_SERVER, IRC_PORT, IRC_MAIN_CHANNEL, IRC_GM_NICK, IRC_REALNAME, IRC_OWNER
 from pokemon_irc.game.actions import GMActions
-from collections import deque
+from collections import deque, defaultdict
 
 
 class Authorization:
@@ -54,6 +54,8 @@ class PokeBot(irc.bot.SingleServerIRCBot):
 
 class GMBot(irc.bot.SingleServerIRCBot):
     auth = auth
+    pending_battles = defaultdict(dict)
+    current_battles = defaultdict(dict)
 
     def __init__(
         self,
@@ -90,11 +92,18 @@ class GMBot(irc.bot.SingleServerIRCBot):
         self.write(nick, message)
 
 
+    def player_on_main_channel(self, nick):
+        return nick in self.channels[IRC_MAIN_CHANNEL].users()
+
+
     def on_pubmsg(self, c, e):
         nick = get_nick(e.source)
-        dest, message = e.arguments[0].split(':', 1)
 
-        if dest != IRC_GM_NICK: return  # TODO:
+        message = e.arguments[0].split()
+        if not message: return 
+        dest = message[0]
+
+        if not dest.endswith(':') or dest[:-1] != IRC_GM_NICK: return
 
         nickserv_auth = self.auth.check_auth(nick)
 
@@ -102,7 +111,7 @@ class GMBot(irc.bot.SingleServerIRCBot):
             self.respond(nick, e.target, "auth to nickserv plx")
             return
 
-        tokens = deque(message.split())
+        tokens = deque(message[1:])
 
         # #channel_name
         # ^ I don't like this :3

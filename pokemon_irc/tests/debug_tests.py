@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-from debug import *
+from pokemon_irc.debug import *
 from collections import deque
 
 tests = [

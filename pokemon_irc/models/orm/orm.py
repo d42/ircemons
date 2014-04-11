@@ -10,29 +10,6 @@ from settings import DATABASE_URI
 Base = declarative_base()
 engine = create_engine(DATABASE_URI)
 
-
-class PokemonType(Base):
-    __tablename__ = "pokemon_type"
-    id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
-    type_id = Column(Integer, ForeignKey('type.id'))
-
-
-class PokemonMove(Base):
-    __tablename__ = "pokemon_move"
-    id = Column(Integer, primary_key=True)
-    level = Column(Integer, nullable=False)
-    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
-    move_id = Column(Integer, ForeignKey('move.id'))
-
-
-class KnownMove(Base):
-    __tablename__ = "known_move"
-    id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('player_pokemon.id'))
-    move_id = Column(Integer, ForeignKey('move.id'))
-
-
 class DefaultColumns:
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True, nullable=False)
@@ -42,11 +19,39 @@ class DefaultColumns:
         return "%s" % self.name
 
 
+#                           generic stuff
+###############################################################################
+###############################################################################
+###############################################################################
+
+class PokemonType(Base):
+    """ many to many, between Pokemon and Type, had to be done """
+    __tablename__ = "pokemon_type"
+    id = Column(Integer, primary_key=True)
+    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
+    type_id = Column(Integer, ForeignKey('type.id'))
+
+
+class PokemonMoveLevel(Base):
+    """ pokemon's move learn level """
+    __tablename__ = "pokemon_move_level"
+    id = Column(Integer, primary_key=True)
+
+    move_id = Column(Integer, ForeignKey("move.id"))
+    pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
+
+    level = Column(Integer)
+
+
 class Pokemon(Base, DefaultColumns):
     __tablename__ = 'pokemon'
     types = relationship("Type", secondary="pokemon_type")
-    moves = relationship("Move", secondary="pokemon_move")
+    moves_levels = relationship("Move", secondary="pokemon_move_level")
     player_pokemons = relationship("PlayerPokemon", backref="base_pokemon")
+
+    evolution_level = Column(Integer)
+    evolves_to_id = Column(Integer, ForeignKey("pokemon.id"))
+
     hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
     defence = Column(Integer, nullable=False)
@@ -59,36 +64,44 @@ class Type(Base, DefaultColumns):
     __tablename__ = 'type'
 
 
-class DamageTypesRelation(Base):
-    __tablename__ = 'damage_types_relation'
+class TypesRelation(Base):
+    __tablename__ = 'types_relation'
     id = Column(Integer, primary_key=True)
     attack = Column(Integer, ForeignKey("type.id"))
     defence = Column(Integer, ForeignKey("type.id"))
-    # attack = relationship('Type')
-    # defence = relationship('Type')
     dmg_mult = Column(Float, nullable=False)
 
 
-class MoveCategory(Base, DefaultColumns):
-    __tablename__ = 'move_category'
+class Ability(Base, DefaultColumns):
+    """ """
+    __tablename__ = 'ability'
+
+
+###############################################################################
+class Category(Base, DefaultColumns):
+    """ Each move is either special, physical or stat
+        Physical uses attack/defence stats while special
+        uses special_{attack,defence}
+    """
+    __tablename__ = 'category'
 
 
 class Move(Base, DefaultColumns):
     __tablename__ = 'move'
+    effect = relationship("Effect")
+
     type = Column(Integer, ForeignKey("type.id"))
-    category = Column(Integer, ForeignKey("move_category.id"))
-    power = Column(Integer)
-    accuracy = Column(Integer)
-    pp = Column(Integer)
-    effect = Column(Integer, ForeignKey("effect.id"))
+    category = Column(Integer, ForeignKey("category.id"), nullable=False)
+    power = Column(Integer, nullable=False)
+    accuracy = Column(Integer, nullable=False)
+    pp = Column(Integer, nullable=False)
+
+    effect_id = Column(Integer, ForeignKey('effect.id'))
+    effect_prob = Column(Integer)
 
 
     def __repr__(self):
         return self.name
-
-
-class Ability(Base, DefaultColumns):
-    __tablename__ = 'ability'
 
 
 class Effect(Base):
@@ -96,16 +109,35 @@ class Effect(Base):
     id = Column(Integer, primary_key=True)
     description = Column(String(150), unique=True)
 
+    def __str__(self):
+        return self.description
+
+###############################################################################
+################  dynamic game entries ########################################
+###############################################################################
+
+
+class KnownMove(Base):
+    """ move currently know by a player's pokemon """
+    __tablename__ = "known_move"
+    id = Column(Integer, primary_key=True)
+    pokemon_id = Column(Integer, ForeignKey('player_pokemon.id'))
+    move_id = Column(Integer, ForeignKey('move.id'))
+    pp = Column(Integer)
+
 
 class PlayerPokemon(Base):
     __tablename__ = "player_pokemon"
     id = Column(Integer, primary_key=True)
-    base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=False)
     name = Column(String(50), nullable=False)
-    xp = Column(Integer, default=0)
-    level = Column(Integer, default=0) # do i need those separate ,_<
+
+    base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=False)
     player_id = Column(Integer, ForeignKey('player.id'))
+
+    xp = Column(Integer, default=0)
+    level = Column(Integer, default=1) # do i need those separate ,_<
     known_moves = relationship("Move", secondary="known_move")
+
     hp = Column(Integer, nullable=False)
     current_hp = Column(Integer, nullable=False)
     attack = Column(Integer, nullable=False)
@@ -118,8 +150,16 @@ class PlayerPokemon(Base):
 class Player(Base, DefaultColumns):
     __tablename__ = "player"
     pokemons = relationship("PlayerPokemon", backref="player")
+    matches_won = Column(Integer, default=0, nullable=False)
+    matches_total = Column(Integer, default=0, nullable=False)
+    xp_total = Column(Integer, default=0, nullable=False)
 
 
+class Battle(Base):
+    __tablename__ = "battle"
+    id = Column(Integer, primary_key=True)
+    challenger = Column(Integer, ForeignKey("player.id"))
+    challengee = Column(Integer, ForeignKey("player.id"))
 
 
 

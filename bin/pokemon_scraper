@@ -5,8 +5,8 @@ import csv
 from pokemon_irc.models import orm
 from sqlalchemy.orm import sessionmaker
 from pokemon_irc.web import poke_get_type_damage, poke_get
-from pokemon_irc.models.pokedb_datatypes import move, entry, ability, types
-logging.basicConfig(level=logging.INFO)
+from pokemon_irc.models.pokedb_datatypes import move, entry, ability, types, move_level
+logging.basicConfig(level=logging.DEBUG)
 
 
 Session = sessionmaker(bind=orm.engine)
@@ -38,7 +38,7 @@ def type_to_db(types, d):
 def category_to_db(categories, d):
     for c in categories:
         logging.debug("adding category: %s" % c)
-        o = orm.MoveCategory(name=c)
+        o = orm.Category(name=c)
         d[c] = o
         session.add(o)
 
@@ -54,7 +54,7 @@ def damagetype_to_db(typedict, types=types):
             continue
 
         logging.debug("adding damage relation: %s -> %s (%s)" % (a.name, b.name, dmg))
-        ot = orm.DamageTypesRelation(attack=a.id, defence=b.id, dmg_mult=dmg)
+        ot = orm.TypesRelation(attack=a.id, defence=b.id, dmg_mult=dmg)
         session.add(ot)
 
     session.commit()
@@ -77,6 +77,9 @@ def moves_to_db(moves, d):
     effect_orm = effects_to_db(effects)
 
     type_id = {x.name: x.id for x in session.query(orm.Type).all()}
+    if not type_id:
+        logging.error("no types, probably the scraping order is borked")
+        raise("jp2gmd")
 
     for m in moves:
         logging.debug("adding move: %s" % m.name)
@@ -92,7 +95,8 @@ def moves_to_db(moves, d):
             power=m.power,
             accuracy=m.accuracy,
             pp=m.pp,
-            effect=effect_orm[e].id,
+            effect_id=effect_orm[e].id,
+            effect_prob=m.effect_prob
         )
         session.add(t)
 
@@ -129,28 +133,76 @@ def abilities_to_db(abilities, d):
     pass # TODO: not implemented so much
 
 
-datatypes = {
-    ("moves", move, moves_to_db),
-    ("pokemons", entry, pokemons_to_db),
-    ("abilities", ability, abilities_to_db),
-}
+
+@orm_wrapper
+def move_trees_to_db(move_levels, d):
+    pass
+    #for e in move_levels:
+        #moves = poke_get(move_levels, name=pokemon.name)
+        #print(pokemon.name, list(moves))
+
+
+def urlify(name):
+    import ipdb; ipdb.set_trace()
+    m = str.maketrans(' ', '-', '.\'')
+    name = name.lower().translate(m)
+    name = bytes(name, encoding='latin1').decode('utf-8')   # cancer
+    name = name.replace('♀', '-f')
+    name = name.replace('♂', '-m')
+    return name
+
+
+def get_trees(datatype):
+    for pokemon in session.query(orm.Pokemon).filter(orm.Pokemon.moves_levels == None).all():
+        import ipdb; ipdb.set_trace()
+        moves = poke_get(datatype, name=urlify(pokemon.name.lower()))
+
+        for m in moves:
+            print(m.name)
+            move = session.query(orm.Move).filter_by(name=m.name).first()
+            if not move: raise("jp2gmd")
+
+            session.add(orm.PokemonMoveLevel(
+                move_id=move.id,
+                pokemon_id=pokemon.id,
+                level=m.level,
+            ))
+        session.commit()
+
+datatypes = [
+    #("types", types, poke_get_type_damage, damagetype_to_db),
+    #("moves", move, moves_to_db),
+    #("pokemons", entry, pokemons_to_db),
+    #("abilities", ability, abilities_to_db),
+    ("moves trees", move_level, get_trees, move_trees_to_db),
+]
 
 # XXX: Too lazy to make it more generic
 speshul_datatypes = [
-    ("types", types, poke_get_type_damage, damagetype_to_db)
 ]
 
 
+# scraping order:
+# 1) types
+# 2) moves
+
 def main():
     log_line = "downloading %s..."
-    for name, datatype, func, orm_func in speshul_datatypes:  # TODO: better naming
-        logging.info(log_line % name)
-        orm_func(func(datatype))
 
-    for (name, datatype, orm_func) in datatypes:
-        logging.info(log_line % name)
-        orm_func(poke_get(datatype))
+    for x in datatypes:
 
+        if len(x) == 3:
+            name, datatype, orm_func = x
+            logging.info(log_line % name)
+            orm_func(poke_get(datatype))
+
+        elif len(x) == 4:
+            name, datatype, func, orm_func = x
+            logging.info(log_line % name)
+            orm_func(func(datatype))
+
+        else:
+            raise("jp2gmd")
 
 if __name__ == '__main__':
     main()
