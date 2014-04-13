@@ -131,7 +131,7 @@ class KnownMove(Base):
 class PlayerPokemon(Base):
     __tablename__ = "player_pokemon"
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), nullable=False)
+    name = Column(String(50), nullable=False, unique=True)
 
     base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=False)
     player_id = Column(Integer, ForeignKey('player.id'))

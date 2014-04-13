@@ -29,7 +29,7 @@ class GMActions:
 
         self.battle_actions = {
             'recall': self._recall_pokemon,
-            'summmon': self._summon_pokemon
+            'summmon': self._summon_pokemon,
         }
 
         self.admin_actions = {

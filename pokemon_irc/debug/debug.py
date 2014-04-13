@@ -2,7 +2,6 @@
 # -*- encoding: utf-8 -*-
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
-from pokemon_irc.game import actions
 from pokemon_irc.exceptions.debug import debug_exception
 from pokemon_irc.game import events
 from pokemon_irc import settings
@@ -10,8 +9,8 @@ import socket
 from collections import deque
 
 
-def create_player(player_name):
-    return events.create_player(player_name)
+def create_player(player_name, password):
+    return events.create_player(player_name, password)
 
 
 def create_pokemon(player_name, pokemon_name):
@@ -60,11 +59,12 @@ def add_move(pokemon_id, move_id):
 
 
 def del_pokemon(pokemon_id):
-    events.del_pokemon(pokemon_id)
+    return events.del_pokemon(pokemon_id)
 
 
-def del_player(player_id):
-    player = session.query(orm.Player).filter_by(id=player_id).first()
+def del_player(player_name):
+    player = session.query(orm.Player).filter_by(name=player_name).first()
+    if not player: return "No such player"
     player_name = player.name
 
     for pokemon in player.pokemons:

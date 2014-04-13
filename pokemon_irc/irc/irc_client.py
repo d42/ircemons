@@ -25,8 +25,8 @@ class PokeBot(irc.bot.SingleServerIRCBot):
         if not name: name = self.name
         command = None
 
-        if message.startswith(self.name+':'):
-            command = message[len(self.name)+1:].strip()
+        if message.startswith(name+':'):
+            command = message[len(name)+1:].strip()
         elif query:
             command = message.strip()
 
@@ -63,8 +63,8 @@ class PokemonBot(PokeBot):
 
 class GMBot(PokeBot):
     authorized = {}
-    pending_battles = defaultdict(dict)
-    current_battles = defaultdict(dict)
+    pending_battles = set()
+    current_battles = set()
 
     def __init__(
         self,
@@ -72,9 +72,15 @@ class GMBot(PokeBot):
         nickname=IRC_GM_NICK,
         realname=IRC_REALNAME,
         server=IRC_SERVER,
-        port=6667):
+        port=6667,
+        bot_list=None):
 
         self.name = nickname
+
+        if not bot_list:
+            bot_list = []
+
+        self.bot_list = bot_list
 
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
         self.channel = channel
@@ -88,24 +94,27 @@ class GMBot(PokeBot):
     def clear_auth(self, c, e):
         self.authorized = {}
 
+    def get_auth(self, nick, hostname):
+        if user.name not in self.authorized: return False
+        if user.hostname == self.authorized[user.name].hostname:
+            return self.authorized[user.name]
+
     def move_auth(self, c, e):
         user = self.parse_source(c.source)
-        if user.name not in self.authorized: return
-        if user.hostname == self.authorized[user.name].hostname:
-            self.authorized[e.target] = self.authorized[user.name]
-            del self.authorized[user.name]
+        player = self.get_auth(user.nick, user.hostname)
+
+        if player:
+            self.authorized[e.target] = player
+            del self.authorized[user.nick]
 
     def auth(self, user, player):
         logging.debug(user, "authorized")
         self.gm.authorized[user.nick] = user_auth(user.hostname, player)
 
     def deauth(self, user):
-        auth = self.authorized.get(user.nick, None)
+        auth = self.get_auth(user.nick, user.hostname)
         if not auth: return
-
-        if auth.hostname == user.hostname:
-            del self.auth_user[user.nick]
-        assert not auth  # shouldn't happen, amirite?
+        del self.authorized[user.nick]
 
     def on_exit(self, c, e):
         user = self.parse_source(c.source)
@@ -140,12 +149,6 @@ class GMBot(PokeBot):
 
         message = self.actions.query_run(user, tokens)
         self.write(user.nick, message)
-
-
-    #def player_on_main_channel(self, nick): # such obsolete wow
-        #import ipdb; ipdb.set_trace()
-        #return nick in self.channels[IRC_MAIN_CHANNEL].users()
-
 
     def on_pubmsg(self, c, e):
         user = self.parse_source(e.source)
@@ -197,5 +200,13 @@ class GMBot(PokeBot):
         print("#%s %s: %s" % (channel, nick, message))
         self.connection.privmsg(channel, "%s: %s" % (nick, message))
 
-    #def create_pokemon(self, create_func):
-        #self.create_func(self, "pikachu")
+    def create_pokemon(self, user, pokemon):
+        id = pokemon.id
+        player = pokemon.player
+
+        p = PokeBot(
+        channel=settings.IRC_MAIN_CHANNEL,
+        nickname='%s[%s]' % (pokemon_name, player)
+        )
+        p._connect()
+        bot_list[id] = p

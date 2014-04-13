@@ -19,6 +19,7 @@ IRC_GM_NICK = "oakxDDDD"
 IRC_REALNAME = "oak xDDDD"
 IRC_OWNER = "DaZ"
 
+POKEMON_NAME_TEMPLATE = "{player}'s {pokemon}"
 
 SOCKET_PATH = "pokeirc.sock"
 

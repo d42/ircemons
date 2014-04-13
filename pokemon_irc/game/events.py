@@ -2,8 +2,11 @@ from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
 from string import ascii_letters, digits
 from random import SystemRandom
+from itertools import count
+from functools import partial
 import hashlib
 import logging
+from pokemon_irc import settings
 
 random = SystemRandom()
 choice = random.choice
@@ -61,6 +64,12 @@ def authorize_player(player_name, password):
     return "wrong password"
 
 
+def _gen_name(player_name, pokemon_name):
+    return settings.POKEMON_NAME_TEMPLATE.format(
+        player=player_name,
+        pokemon=pokemon_name
+    )
+
 
 def create_pokemon(player_name, pokemon_name):
     name = pokemon_name.capitalize()
@@ -69,9 +78,20 @@ def create_pokemon(player_name, pokemon_name):
     if not q: return "No such player"
     if not p: return "no such pokemon"
 
-    session.query()
+    query = session.query(orm.PlayerPokemon)
+
+    n = partial(_gen_name, q.name)
+
+    if query.filter_by(name=n(pokemon_name)).first():
+        for i in count(2):
+            i = str(i)
+
+            if not query.filter_by(name=n(pokemon_name + i)).first():
+                pokemon_name = pokemon_name + i
+                break
+    
     pp = orm.PlayerPokemon(
-        name=("{}'s {}".format(q.name, p.name)),
+        name=n(pokemon_name),
         player_id=q.id,
         base_pokemon_id=p.id,
         hp=p.hp,
@@ -96,6 +116,10 @@ def del_pokemon(pokemon_id):
     session.commit()
 
     return "{} dies".format(pokemon_name)
+
+
+def summon_pokemon(battle, pokemon_name):
+    pass
 
 
 def list_pokemons(player_name):
