@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from pokemon_irc.irc import GMBot, PokeBot
+from pokemon_irc.irc import GMBot
 import argparse
 from pokemon_irc import settings
 import socket
@@ -28,31 +28,8 @@ def listen_socket(s):
         return False
 
 
-#def create_pokemon(self, pokemon, bot_list=bot_list):
-    #id = pokemon.id
-    #player = pokemon.player
-    #if id in bot_list: raise("jp2gmd")
-
-    #p = PokeBot(
-       #channel=settings.IRC_MAIN_CHANNEL,
-       #nickname='%s[%s]' % (pokemon_name, player)
-    #)
-    #p._connect()
-    #bot_list[id] = p
-
-
-#def delete_pokemon(self, pokemon, bot_list=bot_list):
-    #id = pokemon.id
-    #if id not in bot_list: raise("jp2gmd")
-    #pokemon = bot_list[id]
-    #pokemon.disconnect(msg="faints")
-
-    #pass
-
-
 def main():
     gm = GMBot(bot_list=bot_list)
-    #gm.create_pokemon = create_pokemon
     bot_list['GM'] = gm
 
     if os.path.exists(settings.SOCKET_PATH):
@@ -64,15 +41,15 @@ def main():
     s = create_socket()
 
     while True:
+
         for bot in bot_list.values():
             bot.ircobj.process_once()
 
-
         data = listen_socket(s)
         if data:
-            print(data)
+            logging.info("data recv: ", data)
             channel, data = data.split(' ', 1)
-            gm.run(channel, data)
+            gm._run(channel, data)
 
 
 if __name__ == '__main__':

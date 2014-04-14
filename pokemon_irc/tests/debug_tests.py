@@ -4,15 +4,15 @@ from pokemon_irc.debug import *
 from collections import deque
 
 tests = [
-    (create_player  , "create player jp2gmd"          ),
+    (create_player  , "create player jp2gmd password" ),
     (create_pokemon , "create pokemon jp2gmd pikachu" ),
     (list_pokemons  , "list pokemons jp2gmd"          ),
     (list_players   , "list players"                  ),
-    (list_moves     , "list moves 1"                  ),
+    (list_moves     , "list moves jp2gmd pikachu"     ),
     (evolve_pokemon , "evolve 1"                      ),
     (change_stat    , "change stat 1 hp 200"          ),
     (del_pokemon    , "del pokemon 1"                 ),
-    (del_player     , "del player 1"                  ),
+    (del_player     , "del player jp2gmd"             ),
 ]
 
 

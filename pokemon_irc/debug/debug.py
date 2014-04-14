@@ -24,7 +24,7 @@ def list_all_pokemons():
 
 def list_pokemons(player_name=None):
     if not player_name: return list_all_pokemons()
-    return events.list_pokemons(player_name)
+    return '\n'.join(events.list_pokemons(player_name))
 
 
 def list_players():
@@ -39,14 +39,11 @@ def list_all_moves():
         print(move.id, move.name, move.effect, sep='\t')
 
 
-def list_moves(pokemon_name=None):
+def list_moves(player_name, pokemon_name=None):
     if not pokemon_name:
-        return list_all_moves()
+        return '\n'.join(list_all_moves())
+    events.list_moves(player_name, pokemon_name)
 
-    pokemon = session.query(orm.PlayerPokemon).filter_by(id=pokemon_id).first()
-    if not pokemon:
-        return "No such pokemon id"
-    return "\n".join(move.name for move in pokemon.known_moves)
 
 
 def add_move(pokemon_id, move_id):

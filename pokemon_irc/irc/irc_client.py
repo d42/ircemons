@@ -6,11 +6,11 @@ from pokemon_irc.settings import IRC_SERVER, IRC_PORT, IRC_MAIN_CHANNEL, IRC_GM_
 from .actions import GMActions
 from collections import deque, defaultdict, namedtuple
 
-user = namedtuple('user', ['nick', 'real_name', 'hostname'])
+user = namedtuple('user', ['name', 'real_name', 'hostname'])
 user_auth = namedtuple('auth', ['hostname', 'player'])
 
 
-class PokeBot(irc.bot.SingleServerIRCBot):
+class BotBase(irc.bot.SingleServerIRCBot):
     def parse_source(self, source):
         t = str.maketrans('!@', '  ')
         u = user(*source.translate(t).split())
@@ -35,19 +35,16 @@ class PokeBot(irc.bot.SingleServerIRCBot):
             tokens = deque(command.split())
             return tokens
         return False
-    
 
-class PokemonBot(PokeBot):
+
+class PokemonBot(BotBase):
     def __init__(self, pokemon, battle, server=IRC_SERVER, port=IRC_PORT):
 
         self.name = self.ircify(pokemon.name)
         realname = pokemon.base_pokemon.name
         self.channel = ircify(battle.name)
-    
+
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], self.name, realname)
-
-
-        irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
         self.channel = channel
 
     def on_welcome(self, c, e):
@@ -60,10 +57,9 @@ class PokemonBot(PokeBot):
         pass
 
 
-
-class GMBot(PokeBot):
+class GMBot(BotBase):
     authorized = {}
-    pending_battles = set()
+    pending_battles = defaultdict(dict)
     current_battles = set()
 
     def __init__(
@@ -73,97 +69,108 @@ class GMBot(PokeBot):
         realname=IRC_REALNAME,
         server=IRC_SERVER,
         port=6667,
-        bot_list=None):
+        bot_list=None
+        ):
 
-        self.name = nickname
+            self.name = nickname
 
-        if not bot_list:
-            bot_list = []
+            if not bot_list:
+                bot_list = []
 
-        self.bot_list = bot_list
+            self.bot_list = bot_list
 
-        irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
-        self.channel = channel
-        self.actions = GMActions(self)
+            irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
+            self.channel = channel
+            self.actions = GMActions(self)
 
-        self.connection.add_global_handler("part", self.on_exit, -42)
-        self.connection.add_global_handler("quit", self.on_exit, -42)
-        self.connection.add_global_handler("nick", self.move_auth, -42)
-        self.connection.add_global_handler("welcome", self.clear_auth, 1)
+            self.connection.add_global_handler("part", self.on_exit, -42)
+            self.connection.add_global_handler("quit", self.on_exit, -42)
+            self.connection.add_global_handler("nick", self.move_auth, -42)
+            self.connection.add_global_handler("welcome", self.clear_auth, 1)
 
     def clear_auth(self, c, e):
         self.authorized = {}
 
     def get_auth(self, nick, hostname):
-        if user.name not in self.authorized: return False
+        if user.name not in self.authorized:
+            return False
+
         if user.hostname == self.authorized[user.name].hostname:
             return self.authorized[user.name]
 
     def move_auth(self, c, e):
         user = self.parse_source(c.source)
-        player = self.get_auth(user.nick, user.hostname)
+        player = self.get_auth(user.name, user.hostname)
 
         if player:
             self.authorized[e.target] = player
-            del self.authorized[user.nick]
+            del self.authorized[user.name]
 
     def auth(self, user, player):
         logging.debug(user, "authorized")
-        self.gm.authorized[user.nick] = user_auth(user.hostname, player)
+        self.gm.authorized[user.name] = user_auth(user.hostname, player)
 
     def deauth(self, user):
-        auth = self.get_auth(user.nick, user.hostname)
-        if not auth: return
-        del self.authorized[user.nick]
+        logging.debug(user, "deauthorized")
+        auth = self.get_auth(user.name, user.hostname)
+        if not auth:
+            return
+
+        del self.authorized[user.name]
 
     def on_exit(self, c, e):
         user = self.parse_source(c.source)
 
-        if e.type == 'quit': self.deauth(user)
-        elif e.target == IRC_MAIN_CHANNEL: self.deauth(user)
+        if e.type == 'quit':
+            self.deauth(user)
+
+        elif e.target == IRC_MAIN_CHANNEL:  # parts from main channel
+            self.deauth(user)
 
     def on_nicknameinuse(self, c, e):
-        raise("get me a real name!")  # TODO: get me a real exception :v
+        raise Exception("get me a real name!")
 
     def on_welcome(self, c, e):
         c.join(self.channel)
 
     # TODO: refactoring this with on_pubmsg would be cool
-    def on_privmsg(self, c, e):  # TODO: refactoring this with on_pubmsg would be cool
+    def on_privmsg(self, c, e):
 
         user = self.parse_source(e.source)
         tokens = self.tokenize_command(e.arguments[0], query=True)
 
-        if not tokens: return
+        if not tokens:
+            return
 
-        hostname = self.authorized.get(user.nick, False)
+        hostname = self.authorized.get(user.name, False)
         player = user.hostname == self.hostname
 
         if player and tokens[0] in self.actions.no_auth_actions:
-            self.write(user.nick, "already authorized")
+            self.write(user.name, "already authorized")
             return
 
         if not player and tokens[0] not in self.actions.public_actions:
-            self.write(user.nick, "Not authorized")
+            self.write(user.name, "Not authorized")
             return
 
         message = self.actions.query_run(user, tokens)
-        self.write(user.nick, message)
+        self.write(user.name, message)
 
     def on_pubmsg(self, c, e):
         user = self.parse_source(e.source)
         tokens = self.tokenize_command(e.arguments[0])
 
-        if not tokens: return
+        if not tokens:
+            return
 
-        player = self.authorized.get((user.nick, user.hostname), False)
+        player = self.authorized.get((user.name, user.hostname), False)
 
         if player and tokens[0] in self.actions.no_auth_actions:
-            self.respond(user.nick, e.target, "already authorized")
+            self.respond(user.name, e.target, "already authorized")
             return
 
         if not player and tokens[0] not in self.actions.public_actions:
-            self.respond(user.nick, e.target, "not authorized")
+            self.respond(user.name, e.target, "not authorized")
             return
 
         if e.target == IRC_MAIN_CHANNEL:
@@ -171,15 +178,15 @@ class GMBot(PokeBot):
         else:
             message = self.actions.battle_run(user, tokens)
 
-        self.respond(user.nick, e.target, message)
+        self.respond(user.name, e.target, message)
 
-    def run(self, command, channel=None):
+    def _run(self, command, channel=None):
         # pointless, probably bad, but i found it interesting
 
-        name = "motherfucking_admin"
+        user = user(name="admin", hostname="127.0.0.1", realname="admin")
         tokens = deque(command.split())
         if not channel:
-            message = self.actions.admin_run(tokens)
+            message = self.actions.admin_run(user, tokens)
 
         elif channel == IRC_MAIN_CHANNEL:
             message = self.actions.main_channel_run(name, tokens)
@@ -200,7 +207,8 @@ class GMBot(PokeBot):
         print("#%s %s: %s" % (channel, nick, message))
         self.connection.privmsg(channel, "%s: %s" % (nick, message))
 
-    def create_pokemon(self, user, pokemon):
+    def create_pokemon(self, user, battle, pokemon):
+        """ Deploys a PokeBot on IRC"""
         id = pokemon.id
         player = pokemon.player
 
@@ -210,3 +218,7 @@ class GMBot(PokeBot):
         )
         p._connect()
         bot_list[id] = p
+
+
+    def start_battle(self, player1, player2):
+        pass
