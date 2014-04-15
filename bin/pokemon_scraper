@@ -143,7 +143,6 @@ def move_trees_to_db(move_levels, d):
 
 
 def urlify(name):
-    import ipdb; ipdb.set_trace()
     m = str.maketrans(' ', '-', '.\'')
     name = name.lower().translate(m)
     name = bytes(name, encoding='latin1').decode('utf-8')   # cancer
@@ -154,7 +153,6 @@ def urlify(name):
 
 def get_trees(datatype):
     for pokemon in session.query(orm.Pokemon).filter(orm.Pokemon.moves_levels == None).all():
-        import ipdb; ipdb.set_trace()
         moves = poke_get(datatype, name=urlify(pokemon.name.lower()))
 
         for m in moves:

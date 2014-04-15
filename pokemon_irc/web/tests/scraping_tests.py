@@ -43,10 +43,3 @@ def test_pokedb_abilities():
     a = ability(name='Adaptability', pokemon=9, description='Powers up moves of the same type.', gen=4)
     asd = next(web.poke_get(ability))
     assert a == asd
-
-        #@patch("web.pokedb.request_table", new=request_stub):
-        #def test_pokedb_types():
-            #asd = next(web.poke_get(t))
-            #import ipdb; ipdb.set_trace()
-
-
