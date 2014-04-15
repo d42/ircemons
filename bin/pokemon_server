@@ -6,6 +6,7 @@ from pokemon_irc import settings
 import socket
 import os, os.path
 import logging
+from time import sleep
 logging.basicConfig(level=logging.DEBUG)
 
 bot_list = {}
@@ -30,6 +31,7 @@ def listen_socket(s):
 
 def main():
     gm = GMBot(bot_list=bot_list)
+    gm.bot_list = bot_list
     bot_list['GM'] = gm
 
     if os.path.exists(settings.SOCKET_PATH):
@@ -41,15 +43,18 @@ def main():
     s = create_socket()
 
     while True:
+        sleep(0.1)
 
-        for bot in bot_list.values():
+        bots = set(bot_list.values())
+
+        for bot in bots:
             bot.ircobj.process_once()
 
-        data = listen_socket(s)
-        if data:
-            logging.info("data recv: ", data)
-            channel, data = data.split(' ', 1)
-            gm._run(channel, data)
+        #data = listen_socket(s)
+        #if data:
+            #logging.info("data recv: ", data)
+            #channel, data = data.split(' ', 1)
+            #gm._run(channel, data)
 
 
 if __name__ == '__main__':

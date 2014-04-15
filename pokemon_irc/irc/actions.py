@@ -3,7 +3,7 @@ from pokemon_irc.models.orm import session
 from pokemon_irc.game import events
 from pokemon_irc.exceptions import EventError, NoTextError
 from pokemon_irc.text import action_response
-from collections import deque
+from collections import deque, namedtuple
 from datetime import datetime
 import logging
 
@@ -32,12 +32,12 @@ class GMActions:
         self.main_actions = {
             'challenge': self._challenge_player,
             'accept': self._accept_challenge,
-            'yield': self._yield_match,
         }
 
         self.battle_actions = {
             'recall': self._recall_pokemon,
-            'summmon': self._summon_pokemon,
+            'summon': self._summon_pokemon,
+            'yield': self._yield_battle,
         }
 
         self.admin_actions = {
@@ -56,9 +56,9 @@ class GMActions:
         self.gm = GMBot
 
     def key_error_decorator(func):
-        def inner(*args):
+        def inner(*args, **kwargs):
             try:
-                return func(*args)
+                return func(*args, **kwargs)
             except KeyError:
                 return get_response("nocommand")
             except TypeError as e:
@@ -76,19 +76,19 @@ class GMActions:
         return self._run(user, tokens, self.admin_actions)
 
     @key_error_decorator
-    def battle_run(self, user, tokens):
-        return self._run(user, tokens, self.battle_actions)
+    def battle_run(self, battle, user, tokens):
+        return self._run(user, tokens, self.battle_actions, battle=battle)
 
     @key_error_decorator
     def main_channel_run(self, user, tokens):
         return self._run(user, tokens, self.main_actions)
 
-    def _run(self, user, tokens, commands):
+    def _run(self, user, tokens, commands, **kwargs):
         state = commands
         while tokens:
             state = state[tokens.popleft()]
             if hasattr(state, '__call__'):
-                return state(*tokens, user=user)
+                return state(user, *tokens, **kwargs)
         return get_response("uhoh")
 
     ##### Event wrappers
@@ -96,10 +96,10 @@ class GMActions:
     def _list_pokemons(self, user):
         return '\n'.join(events.list_pokemons(user.auth))
 
-    def _register_player(self, password, user):
+    def _register_player(self, user, password):
         return events.create_player(user.name, password)
 
-    def _auth_player(self, password, user):
+    def _auth_player(self, user, password):
         if user.name in self.gm.authorized:
             return get_response("alreadyauth")
         is_authorized = events.authorize_player(user.name, password)
@@ -109,41 +109,39 @@ class GMActions:
             self.gm.authorized[user.name] = user.hostname
         return get_response("okauth")
 
-    def _print(self, *message, user):
+    def _print(self, user, *message):
         return ' '.join(message)
 
-    def _challenge_player(self, challengee, user):
-        if not self.gm.player_on_main_channel(challengee):
+    def _challenge_player(self, user, challengee):
+        if not self.gm.player_on_main(challengee):
             return  get_response('absent', name=challengee)
 
         challenger = user.name
-        events.challenge_player(self, challenger, challengee)
-        self.gm.write(challengee, get_response("challenge", name=challender))
+        events.challenge_player(challenger, challengee)
+        self.gm.start_battle(challenger, challengee)
+        #self.gm.write(challengee, get_response("challenge", name=challender))
+        #self.gm.pending_battles[challengee] = user.name
 
-        return action_response['onchallenge'].format(name=challengee)
+        return get_response('onchallenge', name=challengee)
 
-    def _recall_pokemon(name, battle, user):
+    # SUCH BATTLE ACTIONS
+
+    def _recall_pokemon(self, user, pokemon_name, battle):
         pass
 
-    def _summon_pokemon(name, battle, user):
+    def _summon_pokemon(self, user, pokemon_name, battle):
+        pokemon = events.get_pokemon(user.name, pokemon_name)
+        self.gm.summon_pokemon(user, battle, pokemon)
+        return get_response('onsummon', pokename=pokemon_name)
+
+    def _yield_battle(self, user, battle):
         pass
 
-    def _accept_challenge(self, challenger=None, user=None):
-        if not user: return get_response("uhoh")
-
-        pb = self.gm.pending_battles[user]
-        if not challenger:
-            if len(pb) != 1:
-                return get_response("muchrequest")
-            request = pb.popitem()
-            request.accept()
-            
-        pass
-
-    def _yield_match(self, challengee, user):
-        pass
 
     def _display_help(self, user):
+        pass
+
+    def _accept_challenge(self, user=None, challenger=None):
         pass
 
 
