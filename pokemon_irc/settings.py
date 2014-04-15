@@ -12,7 +12,7 @@ POKEDB_TYPE_CHART_URL = "http://pokemondb.net/type"
 POKEDB_POKEMON_URL = "http://pokemondb.net/pokedex/{name}"
 
 
-IRC_SERVER = "leguin.freenode.net"
+IRC_SERVER = "irc.freenode.net"
 IRC_PORT = 6667
 IRC_MAIN_CHANNEL = "#kekchan"
 IRC_GM_NICK = "oakxDDDD"
