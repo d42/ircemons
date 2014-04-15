@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
-from pokemon_irc.exceptions import EventError
+from pokemon_irc.exceptions.event import EventError
 
 
 def get_player(player_name, exc=True):

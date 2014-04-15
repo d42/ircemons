@@ -7,7 +7,7 @@ import socket
 import os, os.path
 import logging
 from time import sleep
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 bot_list = {}
 

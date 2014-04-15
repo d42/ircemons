@@ -4,7 +4,7 @@ from string import ascii_letters, digits
 from random import SystemRandom
 from itertools import count
 from functools import partial
-from pokemon_irc.exceptions import EventError
+from pokemon_irc.exceptions.event import EventError
 import hashlib
 import logging
 from pokemon_irc import settings

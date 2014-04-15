@@ -1,28 +1,22 @@
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
 from pokemon_irc.game import events
-from pokemon_irc.exceptions import EventError, NoTextError
-from pokemon_irc.text import action_response
+from pokemon_irc.exceptions.event import EventError
+from pokemon_irc.text import TextManager
 from collections import deque, namedtuple
 from datetime import datetime
 import logging
 
-def get_response(resp_code, **kwargs):
-    try:
-        text = action_response[resp_code].format(**kwargs)
-    except:
-        raise NoTextError(resp_code)
-    return text
+tm = TextManager('action_responses')
+
 
 class GMActions:
-
 
     def __init__(self, GMBot):
         self.no_auth_actions = {
             'register': self._register_player,
             'auth': self._auth_player,
         }
-
 
         self.public_actions = {
             'help': self._display_help,
@@ -58,13 +52,15 @@ class GMActions:
     def key_error_decorator(func):
         def inner(*args, **kwargs):
             try:
-                return func(*args, **kwargs)
+                return (1, func(*args, **kwargs))
             except KeyError:
-                return get_response("nocommand")
+                # XXX: shit happesn when exception gets thrown deeper,
+                # needs a fix
+                return (0, tm.get("nocommand"))
             except TypeError as e:
-                return str(e)
+                return (0, str(e))
             except EventError as e:
-                return str(e)
+                return (0, str(e))
         return inner
 
     @key_error_decorator
@@ -89,7 +85,7 @@ class GMActions:
             state = state[tokens.popleft()]
             if hasattr(state, '__call__'):
                 return state(user, *tokens, **kwargs)
-        return get_response("uhoh")
+        return tm.get("uhoh")
 
     ##### Event wrappers
 
@@ -101,28 +97,28 @@ class GMActions:
 
     def _auth_player(self, user, password):
         if user.name in self.gm.authorized:
-            return get_response("alreadyauth")
+            return tm.get("alreadyauth")
         is_authorized = events.authorize_player(user.name, password)
 
         if is_authorized:
             logging.debug(user, "authorized")
             self.gm.authorized[user.name] = user.hostname
-        return get_response("okauth")
+        return tm.get("okauth")
 
     def _print(self, user, *message):
         return ' '.join(message)
 
     def _challenge_player(self, user, challengee):
         if not self.gm.player_on_main(challengee):
-            return  get_response('absent', name=challengee)
+            return  tm.get('absent', name=challengee)
 
         challenger = user.name
         events.challenge_player(challenger, challengee)
         self.gm.start_battle(challenger, challengee)
-        #self.gm.write(challengee, get_response("challenge", name=challender))
+        #self.gm.write(challengee, tm.get("challenge", name=challender))
         #self.gm.pending_battles[challengee] = user.name
 
-        return get_response('onchallenge', name=challengee)
+        return tm.get('onchallenge', name=challengee)
 
     # SUCH BATTLE ACTIONS
 
@@ -132,11 +128,10 @@ class GMActions:
     def _summon_pokemon(self, user, pokemon_name, battle):
         pokemon = events.get_pokemon(user.name, pokemon_name)
         self.gm.summon_pokemon(user, battle, pokemon)
-        return get_response('onsummon', pokename=pokemon_name)
+        return tm.get('onsummon', pokename=pokemon_name)
 
     def _yield_battle(self, user, battle):
         pass
-
 
     def _display_help(self, user):
         pass
