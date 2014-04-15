@@ -13,6 +13,10 @@ user_auth = namedtuple("auth", ["hostname", "player"])
 
 
 class BotBase(irc.bot.SingleServerIRCBot):
+    def __init__(self, server_list, nickname, realname):
+        super().__init__(server_list, nickname, realname)
+        self.connection.buffer_class.errors = 'replace'
+
     def parse_source(self, source):
         # Shame there's no documentation for it and
 
@@ -61,8 +65,7 @@ class PokemonBot(BotBase):
         realname = pokemon.base_pokemon.name
         self.channel = channel
         self.owner = owner
-
-        irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
+        super().__init__([(server, port)], nickname, realname)
 
     def on_welcome(self, c, e):
         c.join(self.channel)
@@ -99,7 +102,7 @@ class GMBot(BotBase):
 
             self.bot_list = bot_list
 
-            irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, realname)
+            super().__init__([(server, port)], nickname, realname)
             self.channel = channel
             self.actions = GMActions(self)
 

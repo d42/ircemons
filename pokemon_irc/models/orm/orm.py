@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, Column, Integer, String,\
     ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from settings import DATABASE_URI
+from pokemon_irc.settings import DATABASE_URI
 
 Base = declarative_base()
 engine = create_engine(DATABASE_URI)
