@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cwd=$(pwd)
-export PYTHONPATH=${cwd}:$PYTHONPATH
-bin/pokemon_scraper

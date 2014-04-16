@@ -127,3 +127,13 @@ def list_pokemons(player_name):
     player = get_player(player_name)
     pokemons = player.pokemons
     yield from (pokemon_details.format(p=p) for p in pokemons)
+
+
+def level_up(pokemon, new_level):
+    pokemon_id = pokemon.base_pokemon.id
+    moves = session.query(orm.PokemonMoveLevel).\
+        filter(
+            orm.PokemonMoveLevel.id == pokemon_id,
+            orm.PokemonMoveLevel.level.between(old_level, new_level)
+        )
+

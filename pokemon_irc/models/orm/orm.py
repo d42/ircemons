@@ -167,4 +167,4 @@ class Battle(Base):
 
 
 
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine) # bad for testing ;3

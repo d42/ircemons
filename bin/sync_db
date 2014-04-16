@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+
+from pokemon_irc.models.orm import Base
+from pokemon_irc.models import orm
+
+Base.metadata.create_all(orm.engine)
