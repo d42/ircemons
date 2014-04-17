@@ -2,11 +2,12 @@ import irc.bot
 import irc.strings
 import logging
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
-from pokemon_irc.settings import IRC_SERVER, IRC_PORT, IRC_MAIN_CHANNEL, IRC_GM_NICK, IRC_REALNAME, IRC_OWNER
+from pokemon_irc.settings import settings
 from pokemon_irc.text import TextManager
 from .actions import GMActions
 from collections import deque, defaultdict, namedtuple
 tm = TextManager("action_responses")
+irc_settings = settings['irc']
 
 user = namedtuple("user", ["name", "real_name", "hostname"])
 user_auth = namedtuple("auth", ["hostname", "player"])
@@ -49,7 +50,7 @@ class BotBase(irc.bot.SingleServerIRCBot):
     def write(self, channel, message):
         """ send message to a channel(username) """
         for line in message.split('\n'):
-            print("#%s %s: %s" % (channel, IRC_GM_NICK, line))
+            print("#%s %s: %s" % (channel, irc_settings['gm_nick'], line))
             self.connection.privmsg(channel, line)
 
     def respond(self, nick, channel, message):
@@ -59,7 +60,7 @@ class BotBase(irc.bot.SingleServerIRCBot):
 
 
 class PokemonBot(BotBase):
-    def __init__(self, pokemon, channel, nickname, owner, server=IRC_SERVER, port=6667):
+    def __init__(self, pokemon, channel, nickname, owner, server=irc_settings['server'], port=irc_settings['port']):
 
         self.name = nickname
         realname = pokemon.base_pokemon.name
@@ -90,11 +91,11 @@ class GMBot(BotBase):
 
     def __init__(
         self,
-        channel=IRC_MAIN_CHANNEL,
-        nickname=IRC_GM_NICK,
-        realname=IRC_REALNAME,
-        server=IRC_SERVER,
-        port=6667,
+        channel=irc_settings["main_channel"],
+        nickname=irc_settings["gm_nick"],
+        realname=irc_settings["realname"],
+        server=irc_settings["server"],
+        port=irc_settings["port"],
         bot_list=None
         ):
 
@@ -168,7 +169,7 @@ class GMBot(BotBase):
         if e.type == "quit":
             self.deauth(user)
 
-        elif e.target == IRC_MAIN_CHANNEL:  # parts from main channel
+        elif e.target == irc_settings['main_channel']:  # parts from main channel
             self.deauth(user)
 
     def on_nicknameinuse(self, c, e):
@@ -216,7 +217,7 @@ class GMBot(BotBase):
             self.respond(user.name, e.target, "not authorized")
             return
 
-        if e.target == IRC_MAIN_CHANNEL:
+        if e.target == irc_settings["main_channel"]:
             ok, message = self.actions.main_channel_run(user, tokens)
         else:
             battle = self.current_battles[e.target]
@@ -251,7 +252,7 @@ class GMBot(BotBase):
         if not channel:
             message = self.actions.admin_run(user, tokens)
 
-        elif channel == IRC_MAIN_CHANNEL:
+        elif channel == irc_settings["main_channel"]:
             message = self.actions.main_channel_run(name, tokens)
 
         else:
@@ -312,5 +313,5 @@ class GMBot(BotBase):
         self.connection.join(channel)
 
     def player_on_main(self, player_name):
-        if player_name in self.channels[IRC_MAIN_CHANNEL].userdict:
+        if player_name in self.channels[irc_settings["main_channel"]].userdict:
             return True

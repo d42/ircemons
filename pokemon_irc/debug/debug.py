@@ -98,8 +98,8 @@ def info_pokemon(pokemon_id):
 
 def call_server(*tokens):
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.connect(settings.SOCKET_PATH)
-    channel = settings.IRC_MAIN_CHANNEL,
+    s.connect(settings['misc']['socket_path'])
+    channel = settings['irc']['main_channel'],
 
     s.sendall(bytes(' '.join(channel + tokens), encoding="utf-8"))
     return "ok"

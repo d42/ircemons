@@ -8,7 +8,7 @@ debug:
 	bin/pokemon_debug
 
 pokemans:
-	bin/pokemon_scrapper
+	bin/pokemon_scraper
 # XXX: switch to database much
 #
 db:

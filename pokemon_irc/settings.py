@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
-DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'pokemons.db')
+from os.path import dirname, abspath, join, isfile, expanduser
+import configparser
 
-#urls with pokemans features
-POKEDB_POKEMONS_URL = "http://pokemondb.net/pokedex/all"
-POKEDB_MOVES_URL = "http://pokemondb.net/move/all"
-POKEDB_ABILITIES_URL = "http://pokemondb.net/ability"
-POKEDB_TYPE_CHART_URL = "http://pokemondb.net/type"
-POKEDB_POKEMON_URL = "http://pokemondb.net/pokedex/{name}"
+class Config(configparser.RawConfigParser):
 
+    def _validate_value_types(self, *, section="", option="", value=""):
+        """ I like my ints, thank you very much"""
+        return True
 
-IRC_SERVER = "irc.freenode.net"
-IRC_PORT = 6667
-IRC_MAIN_CHANNEL = "#kekchan"
-IRC_GM_NICK = "oakxDDDD"
-IRC_REALNAME = "oak xDDDD"
-IRC_OWNER = "DaZ"
+dotconfig = ".config/ircemons/settings.ini"
+project_root = dirname(dirname(abspath(__file__)))
+root = os.path.expanduser('~')
 
-POKEMON_NAME_TEMPLATE = "{player}'s {pokemon}"
+settings_path = join(project_root, "settings.ini")
+if isfile(join(root, dotconfig)):
+    settings_path = join(root, dotconfig)
 
-SOCKET_PATH = "pokeirc.sock"
+settings = Config()
+settings.read(settings_path)
+db_uri = settings["game"]["database_uri"]
 
-IRC_BATTLE_CHANNEL_TEMPLATE = "#{name1}_vs_{name2}_{battle_id}"
-
+# expanduser reads only the first letter ;c
+settings["game"]["database_uri"] = db_uri.replace('~', root, 1)
+settings["irc"]["port"] = int(settings["irc"]["port"])

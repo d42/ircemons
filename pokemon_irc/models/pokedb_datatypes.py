@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 from collections import namedtuple, UserList
-from pokemon_irc import settings
+from pokemon_irc.settings import settings
+pokedb_settings = settings["pokedb"]
 
 types = UserList([
     'normal',
@@ -87,11 +88,11 @@ move_level.url = 'http://pokemondb.net/pokedex/{name}'
 
 
 triples = [
-    [ability, ability_defaults, settings.POKEDB_ABILITIES_URL],
-    [move, move_defaults, settings.POKEDB_MOVES_URL],
-    [entry, entry_defaults, settings.POKEDB_POKEMONS_URL],
-    [move_level, move_level_defaults, settings.POKEDB_POKEMON_URL],
-    [types, [1.0] * len(types), settings.POKEDB_TYPE_CHART_URL]
+    [ability, ability_defaults, pokedb_settings["abilities"]],
+    [move, move_defaults, pokedb_settings["moves"]],
+    [entry, entry_defaults, pokedb_settings["pokemons"]],
+    [move_level, move_level_defaults, pokedb_settings["pokemon"]],
+    [types, [1.0] * len(types), pokedb_settings["types"]]
 ]
 for type, d, url in triples:
     type.defaults = d

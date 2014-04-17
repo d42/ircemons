@@ -27,7 +27,12 @@ def orm_wrapper(func):
 
 @orm_wrapper
 def type_to_db(types, d):
+    d.update({t.name: t for t in session.query(orm.Type).all()})
     for t in types:
+        if t in d:
+            logging.debug("already in db: %s" % t)
+            continue
+
         logging.debug("adding type: %s" % t)
         o = orm.Type(name=t)
         d[t] = o
@@ -37,7 +42,12 @@ def type_to_db(types, d):
 @orm_wrapper
 def category_to_db(categories, d):
     for c in categories:
+        if session.query(orm.Category).filter_by(name=c).exists():
+            logging.debug("category %s already in db" % c)
+            continue
+
         logging.debug("adding category: %s" % c)
+
         o = orm.Category(name=c)
         d[c] = o
         session.add(o)
@@ -45,16 +55,23 @@ def category_to_db(categories, d):
 
 def damagetype_to_db(typedict, types=types):
     type_orm = type_to_db(types)
+    damagetype_in_db = set((t.attack.name, t.defence.name)
+                           for t in session.query(orm.TypesRelation).all())
 
     for t1, t2 in ((t1, t2) for t1 in typedict for t2 in typedict[t1]):
+        if (t1, t2) in damagetype_in_db:
+            logging.debug('%s -> %s already in db' % (t1, t2))
+            continue
+
         a, b = type_orm[t1], type_orm[t2]
         dmg = typedict[t1][t2]
 
         if not dmg:
             continue
 
+
         logging.debug("adding damage relation: %s -> %s (%s)" % (a.name, b.name, dmg))
-        ot = orm.TypesRelation(attack=a.id, defence=b.id, dmg_mult=dmg)
+        ot = orm.TypesRelation(attack=a, defence=b, dmg_mult=dmg)
         session.add(ot)
 
     session.commit()
@@ -82,6 +99,11 @@ def moves_to_db(moves, d):
         raise("jp2gmd")
 
     for m in moves:
+        if session.query(orm.Move).filter_by(name=m.name).exists():
+            logging.debug("move %s already in db" % m.name)
+            continue
+        import ipdb; ipdb.set_trace()
+
         logging.debug("adding move: %s" % m.name)
         n = m.name
         c = m.category

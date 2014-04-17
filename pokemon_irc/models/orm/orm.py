@@ -5,10 +5,10 @@ from sqlalchemy import create_engine, Column, Integer, String,\
     ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from pokemon_irc.settings import DATABASE_URI
+from pokemon_irc.settings import settings
 
 Base = declarative_base()
-engine = create_engine(DATABASE_URI)
+engine = create_engine(settings["game"]["database_uri"])
 
 class DefaultColumns:
     id = Column(Integer, primary_key=True)
@@ -28,8 +28,8 @@ class PokemonType(Base):
     """ many to many, between Pokemon and Type, had to be done """
     __tablename__ = "pokemon_type"
     id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('pokemon.id'))
-    type_id = Column(Integer, ForeignKey('type.id'))
+    pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
+    type_id = Column(Integer, ForeignKey("type.id"))
 
 
 class PokemonMoveLevel(Base):
@@ -46,7 +46,7 @@ class PokemonMoveLevel(Base):
 
 
 class Pokemon(Base, DefaultColumns):
-    __tablename__ = 'pokemon'
+    __tablename__ = "pokemon"
     types = relationship("Type", secondary="pokemon_type")
     moves_levels = relationship("Move", secondary="pokemon_move_level")
     player_pokemons = relationship("PlayerPokemon", backref="base_pokemon")
@@ -63,20 +63,22 @@ class Pokemon(Base, DefaultColumns):
 
 
 class Type(Base, DefaultColumns):
-    __tablename__ = 'type'
+    __tablename__ = "type"
 
 
 class TypesRelation(Base):
-    __tablename__ = 'types_relation'
+    __tablename__ = "types_relation"
     id = Column(Integer, primary_key=True)
-    attack = Column(Integer, ForeignKey("type.id"))
-    defence = Column(Integer, ForeignKey("type.id"))
+    attack_id = Column(Integer, ForeignKey("type.id"))
+    attack = relationship("Type", foreign_keys=[attack_id])
+    defence_id = Column(Integer, ForeignKey("type.id"))
+    defence = relationship("Type", foreign_keys=[defence_id])
     dmg_mult = Column(Float, nullable=False)
 
 
 class Ability(Base, DefaultColumns):
     """ """
-    __tablename__ = 'ability'
+    __tablename__ = "ability"
 
 
 ###############################################################################
@@ -85,11 +87,11 @@ class Category(Base, DefaultColumns):
         Physical uses attack/defence stats while special
         uses special_{attack,defence}
     """
-    __tablename__ = 'category'
+    __tablename__ = "category"
 
 
 class Move(Base, DefaultColumns):
-    __tablename__ = 'move'
+    __tablename__ = "move"
     effect = relationship("Effect")
 
     type = Column(Integer, ForeignKey("type.id"))
@@ -98,7 +100,7 @@ class Move(Base, DefaultColumns):
     accuracy = Column(Integer, nullable=False)
     pp = Column(Integer, nullable=False)
 
-    effect_id = Column(Integer, ForeignKey('effect.id'))
+    effect_id = Column(Integer, ForeignKey("effect.id"))
     effect_prob = Column(Integer)
 
 
@@ -107,7 +109,7 @@ class Move(Base, DefaultColumns):
 
 
 class Effect(Base):
-    __tablename__ = 'effect'
+    __tablename__ = "effect"
     id = Column(Integer, primary_key=True)
     description = Column(String(150), unique=True)
 
@@ -123,8 +125,8 @@ class KnownMove(Base):
     """ move currently know by a player's pokemon """
     __tablename__ = "known_move"
     id = Column(Integer, primary_key=True)
-    pokemon_id = Column(Integer, ForeignKey('player_pokemon.id'))
-    move_id = Column(Integer, ForeignKey('move.id'))
+    pokemon_id = Column(Integer, ForeignKey("player_pokemon.id"))
+    move_id = Column(Integer, ForeignKey("move.id"))
     pp = Column(Integer)
 
 
@@ -134,7 +136,7 @@ class PlayerPokemon(Base):
     name = Column(String(50), nullable=False, unique=True)
 
     base_pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=False)
-    player_id = Column(Integer, ForeignKey('player.id'))
+    player_id = Column(Integer, ForeignKey("player.id"))
 
     xp = Column(Integer, default=0)
     level = Column(Integer, default=1) # do i need those separate ,_<

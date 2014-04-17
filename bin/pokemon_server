@@ -2,7 +2,7 @@
 
 from pokemon_irc.irc import GMBot
 import argparse
-from pokemon_irc import settings
+from pokemon_irc.settings import settings
 import socket
 import os, os.path
 import logging
@@ -14,7 +14,7 @@ bot_list = {}
 
 def create_socket():
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.bind(settings.SOCKET_PATH)
+    s.bind(settings['misc']['socket_path'])
     s.listen(2)
     s.settimeout(0.3)
     return s
@@ -34,8 +34,8 @@ def main():
     gm.bot_list = bot_list
     bot_list['GM'] = gm
 
-    if os.path.exists(settings.SOCKET_PATH):
-        os.remove(settings.SOCKET_PATH)
+    if os.path.exists(settings['misc']['socket_path']):
+        os.remove(settings['misc']['socket_path'])
 
     for bot in bot_list.values():
         bot._connect()
