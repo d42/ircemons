@@ -17,6 +17,8 @@ def get_columns(row, datatype):
             return def_val
 
         val0 = val[0].strip()
+        if type(def_val) == str:
+            return val0
 
         if type(def_val) == list:
             return [val0] if len(val) == 1 else val
@@ -38,7 +40,9 @@ def request_table(url, classes="data-table wide-table", xpath=None):
     if not xpath:
         xpath = "//table[@class='{}'][1]/tbody/tr".format(classes)
 
-    text = requests.get(url).text
+    r = requests.get(url)
+    r.encoding = 'utf-8'
+    text = r.text
     tree = lxml.html.fromstring(text)
     table = tree.xpath(xpath)
     return table
@@ -64,13 +68,6 @@ def poke_get(datatype, **kwargs):
 
     for row in table:
         yield datatype(*parse_row(row))
-
-
-
-#def poke_get_moves(pokemon_name):
-    #moves = request_table(pokemon_url)
-
-    ##tree = 
 
 
 def poke_get_type_damage(datatype):

@@ -39,7 +39,7 @@ class PokemonMoveLevel(Base):
 
     move_id = Column(Integer, ForeignKey("move.id"))
     pokemon_id = Column(Integer, ForeignKey("pokemon.id"))
-    derp = relationship("Pokemon", backref="move_level")
+    pokemon = relationship("Pokemon", backref="move_level")
     move = relationship("Move")
 
     level = Column(Integer)
@@ -94,13 +94,17 @@ class Move(Base, DefaultColumns):
     __tablename__ = "move"
     effect = relationship("Effect")
 
-    type = Column(Integer, ForeignKey("type.id"))
-    category = Column(Integer, ForeignKey("category.id"), nullable=False)
+    type_id = Column(Integer, ForeignKey("type.id"))
+    effect_id = Column(Integer, ForeignKey("effect.id"))
+    category_id = Column(Integer, ForeignKey("category.id"), nullable=False)
+
+    type = relationship("Type")
+    category = relationship("Category")
+
     power = Column(Integer, nullable=False)
     accuracy = Column(Integer, nullable=False)
     pp = Column(Integer, nullable=False)
 
-    effect_id = Column(Integer, ForeignKey("effect.id"))
     effect_prob = Column(Integer)
 
 

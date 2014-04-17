@@ -26,8 +26,8 @@ types = UserList([
 ])
 
 
-entry_defaults = [0, '', [], 0, 0, 0, 0, 0, 0, 0]
-entry = namedtuple(
+pokemon_defaults = [0, '', [], 0, 0, 0, 0, 0, 0, 0]
+pokemon = namedtuple(
     'pokemon',
     [
         'id',
@@ -43,7 +43,7 @@ entry = namedtuple(
     ]
 )
 
-entry.classes = 'data-table'
+pokemon.classes = 'data-table'
 
 move_defaults = ['', '', '',  0, 0, 0, '', '', 0]
 move = namedtuple(
@@ -82,7 +82,7 @@ move_level = namedtuple(
     ]
 )
 
-#move_level.xpath = "//div[@class='col desk-span-6 lap-span-12'][1]/table[1]/tbody/tr"
+# move_level.xpath = "//div[@class='col desk-span-6 lap-span-12'][1]/table[1]/tbody/tr"
 move_level.xpath = "//li[@id='svtabs_moves_13']//table[1]/tbody/tr"
 move_level.url = 'http://pokemondb.net/pokedex/{name}'
 
@@ -90,7 +90,7 @@ move_level.url = 'http://pokemondb.net/pokedex/{name}'
 triples = [
     [ability, ability_defaults, pokedb_settings["abilities"]],
     [move, move_defaults, pokedb_settings["moves"]],
-    [entry, entry_defaults, pokedb_settings["pokemons"]],
+    [pokemon, pokemon_defaults, pokedb_settings["pokemons"]],
     [move_level, move_level_defaults, pokedb_settings["pokemon"]],
     [types, [1.0] * len(types), pokedb_settings["types"]]
 ]
