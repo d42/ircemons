@@ -8,7 +8,8 @@ errors = {
     "shortpass": "Password is shorter than {length} characters",
     "badpassword": "No such user or bad password.",
     "alreadypokemon": "Pokemon with name {name} already exists.",
-    "alreadysummoned": "One is enough"
+    "alreadysummoned": "One is enough",
+    "alreadybot": "Bot with nickname {name} is already connected."
 }
 
 pokemon_details = (
@@ -19,8 +20,10 @@ pokemon_details = (
 
 action_responses = {
     "okauth": "Authorized.",
+    "okreg": "Registered.",
     "noauth": "Not authorized",
     "alreadyauth": "Already authorized",
+    "alreadypokemon": "You already have a pokemon",
     "onchallenge": "Player {name} has been challenged.",
     "uhoh": "Something went wrong.",
     "absent": "Player {name} is not on the main channel.",

@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 from sqlalchemy import create_engine, Column, Integer, String,\
-    ForeignKey, Float
+    ForeignKey, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from pokemon_irc.settings import settings
@@ -107,7 +107,6 @@ class Move(Base, DefaultColumns):
 
     effect_prob = Column(Integer)
 
-
     def __repr__(self):
         return self.name
 
@@ -165,11 +164,28 @@ class Player(Base, DefaultColumns):
     xp_total = Column(Integer, default=0, nullable=False)
 
 
+class BattlePokemon(Base):
+    __tablename__ = "battle_pokemon"
+    id = Column(Integer, primary_key=True)
+    battle_id = Column(ForeignKey("battle.id"))
+    pokemon_id = Column(ForeignKey("player_pokemon.id"))
+
+    battle = relationship("Battle")
+    pokemon = relationship("PlayerPokemon")
+    evasion = Column(Float, nullable=False)
+
+
 class Battle(Base):
     __tablename__ = "battle"
     id = Column(Integer, primary_key=True)
-    challenger = Column(Integer, ForeignKey("player.id"))
-    challengee = Column(Integer, ForeignKey("player.id"))
+    challenger_id = Column(Integer, ForeignKey("player.id"), nullable=False)
+    challengee_id = Column(Integer, ForeignKey("player.id"), nullable=False)
+    winner_id = Column(Integer, ForeignKey("player.id"), nullable=True)
+    pokemons = relationship("BattlePokemon")
+    challengee = relationship("Player", foreign_keys=[challengee_id])
+    challenger = relationship("Player", foreign_keys=[challenger_id])
+    winner = relationship("Player", foreign_keys=[winner_id])
+    date = Column(DateTime)
 
 
 

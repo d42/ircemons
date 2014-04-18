@@ -25,3 +25,4 @@ db_uri = settings["game"]["database_uri"]
 # expanduser reads only the first letter ;c
 settings["game"]["database_uri"] = db_uri.replace('~', root, 1)
 settings["irc"]["port"] = int(settings["irc"]["port"])
+settings["irc"]["nick_length_limit"] = int(settings["irc"]["nick_length_limit"])

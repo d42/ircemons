@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
-from pokemon_irc.exceptions.debug import debug_exception
+from pokemon_irc.exceptions.debug import DebugException
 from pokemon_irc.game import events
 from pokemon_irc import settings
 import socket
@@ -39,10 +39,15 @@ def list_all_moves():
         print(move.id, move.name, move.effect, sep='\t')
 
 
-def list_moves(player_name, pokemon_name=None):
-    if not pokemon_name:
+def list_moves(player_name=None, pokemon_name=None):
+    if not pokemon_name and not player_name:
         return '\n'.join(list_all_moves())
-    events.list_moves(player_name, pokemon_name)
+
+    if player_name and pokemon_name:
+        events.list_moves(player_name, pokemon_name)
+
+    if not pokemon_name or player_name:
+        DebugException("derp")
 
 
 
@@ -104,10 +109,6 @@ def call_server(*tokens):
     s.sendall(bytes(' '.join(channel + tokens), encoding="utf-8"))
     return "ok"
 
-
-def call_battle(*tokens):
-    pass
-
 debug_functions = {
     'create': {'pokemon': create_pokemon, 'player': create_player},
     'list': {'pokemons': list_pokemons, 'players': list_players, 'moves': list_moves},
@@ -117,5 +118,5 @@ debug_functions = {
     'change': {'stat': change_stat},
     'evolve': evolve_pokemon,
     'server': call_server,
-    'battle': call_battle
+    #'battle': call_battle
 }

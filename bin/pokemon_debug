@@ -25,7 +25,10 @@ def main():
         try:
             line = input("> ")
             line = line.split()
-            print(parse_command(line))
+            try:
+                print(parse_command(line))
+            except Exception as e:
+                print("Something went wrong:", str(e))
 
         except EOFError:
             return

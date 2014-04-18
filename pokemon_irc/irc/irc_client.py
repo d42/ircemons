@@ -4,6 +4,7 @@ import logging
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 from pokemon_irc.settings import settings
 from pokemon_irc.text import TextManager
+from pokemon_irc.exceptions.irc import BotError
 from .actions import GMActions
 from collections import deque, defaultdict, namedtuple
 tm = TextManager("action_responses")
@@ -19,8 +20,8 @@ class BotBase(irc.bot.SingleServerIRCBot):
         self.connection.buffer_class.errors = 'replace'
 
     def parse_source(self, source):
-        # Shame there's no documentation for it and
-
+        """ Returns an user tuple didn't know that the 
+            irclib already does that ,_, """
         u = user(
             name=source.nick,
             real_name=source.user,
@@ -32,7 +33,13 @@ class BotBase(irc.bot.SingleServerIRCBot):
         """ turn into valid irc nickname """
         pass
 
+    @property
+    def name(self):
+        return self.connection.get_nickname()
+
     def tokenize_command(self, message, name=None, query=False):
+        """ Check if the message is directed to the bot, unless it's
+            on query """
         if not name: name = self.name
         command = None
 
@@ -62,7 +69,6 @@ class BotBase(irc.bot.SingleServerIRCBot):
 class PokemonBot(BotBase):
     def __init__(self, pokemon, channel, nickname, owner, server=irc_settings['server'], port=irc_settings['port']):
 
-        self.name = nickname
         realname = pokemon.base_pokemon.name
         self.channel = channel
         self.owner = owner
@@ -80,7 +86,9 @@ class PokemonBot(BotBase):
 
     def on_pubmsg(self, c, e):
         user = self.parse_source(e.source)
-        pass
+        tokens = self.tokenize_command(e.arguments[0])
+        if tokens:
+            self.respond(user.name, e.target, "herpderp")
 
 
 class GMBot(BotBase):
@@ -99,7 +107,7 @@ class GMBot(BotBase):
         bot_list=None
         ):
 
-            self.name = nickname
+            #self.name = nickname
 
             self.bot_list = bot_list
 
@@ -155,7 +163,7 @@ class GMBot(BotBase):
         battle = self.current_battles.get(channel, None)
         if not battle: return
 
-        if user.name == c.get_nickname():
+        if user.name == self.name:
             c.invite(battle["player1"], channel)
             c.invite(battle["player2"], channel)
             c.topic(battle["channel"], new_topic="herp derp")
@@ -173,7 +181,7 @@ class GMBot(BotBase):
             self.deauth(user)
 
     def on_nicknameinuse(self, c, e):
-        raise Exception("get me a real name!")
+        raise BotError("alreadybot", name=self.name)
 
     def on_welcome(self, c, e):
         c.join(self.channel)
@@ -278,7 +286,10 @@ class GMBot(BotBase):
         p = PokemonBot(
             pokemon,
             channel=battle["channel"],
-            nickname="%s[%s]" % (pokemon.name, player.name),
+            nickname=settings['templates']['pokemon_name'].format(
+                player=player.name,
+                pokemon=pokemon.name
+            ),
             owner=user
         )
         p.gm = self
@@ -291,12 +302,13 @@ class GMBot(BotBase):
         if not pokemon:
             self.respond()
 
-    def start_battle(self, challenger, challengee):
+    def start_battle(self, challenger, challengee, battle_id):
         #  TODO: are there any invalid characters
         channel = "###" + challenger + "_vs_" + challengee
 
         # battle = battle(challenger, challengee, channel)
         battle = {
+            "id": battle_id,
             "player1": challenger,
             "player2": challengee,
             "channel": channel,
@@ -313,5 +325,8 @@ class GMBot(BotBase):
         self.connection.join(channel)
 
     def player_on_main(self, player_name):
-        if player_name in self.channels[irc_settings["main_channel"]].userdict:
-            return True
+        if player_name not in self.channels[irc_settings["main_channel"]].userdict:
+            return False
+        if player_name not in self.authorized:
+            return False
+        return True

@@ -3,13 +3,11 @@ from pokemon_irc.models.orm import session
 from string import ascii_letters, digits
 from random import SystemRandom
 from itertools import count
-from functools import partial
 from pokemon_irc.exceptions.event import EventError
 import hashlib
 import logging
-from pokemon_irc import settings
-from pokemon_irc.text import pokemon_details
 from .utils import get_player, get_pokemon
+from datetime import datetime
 
 random = SystemRandom()
 choice = random.choice
@@ -39,6 +37,7 @@ def create_player(player_name, password):
 
     session.add(new_player)
     session.commit()
+    return True
 
 
 def authorize_player(player_name, password):
@@ -121,7 +120,15 @@ def list_moves(player_name, pokemon_name):
 def challenge_player(player1_name, player2_name):
     player1 = get_player(player1_name)
     player2 = get_player(player2_name)
-    return True
+    battle = orm.Battle(
+        challenger=player1,
+        challengee=player2,
+        date=datetime.now()
+    )
+    session.add(battle)
+    session.commit()
+    return battle.id
+
 
 def list_pokemons(player_name):
     player = get_player(player_name)
@@ -137,3 +144,6 @@ def level_up(pokemon, new_level):
             orm.PokemonMoveLevel.level.between(old_level, new_level)
         )
 
+
+def cast_move(a_pokemon, d_pokemon, move):
+    orm.session(orm.Move).filter
