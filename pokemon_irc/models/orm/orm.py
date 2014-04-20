@@ -164,7 +164,16 @@ class Player(Base, DefaultColumns):
     xp_total = Column(Integer, default=0, nullable=False)
 
 
-class BattlePokemon(Base):
+
+#class BattleMove(Base):
+    #__tablename__ = "battle_move"
+    #id = Column(Integer, primary_key=True)
+
+    #battle_id = Column(ForeignKey("battle.id"))
+    #battle = relationship("Battle") yadda, yadda. I'll add it later ;3
+
+
+class BattlePokemon(Base): # Mostly to keep the evasion stat
     __tablename__ = "battle_pokemon"
     id = Column(Integer, primary_key=True)
     battle_id = Column(ForeignKey("battle.id"))
