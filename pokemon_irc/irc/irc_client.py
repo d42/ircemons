@@ -92,10 +92,7 @@ class PokemonBot(BotBase):
 
 
 class GMBot(BotBase):
-    authorized = {}
-    pending_battles = defaultdict(dict)
-    current_battles = defaultdict(dict)
-    b = False
+    __slots__ = ['authorized', 'current_battles', 'b']
 
     def __init__(
         self,
@@ -106,6 +103,10 @@ class GMBot(BotBase):
         port=irc_settings["port"],
         bot_list=None
         ):
+
+            self.authorized = {}
+            self.pending_battles = defaultdict(dict)
+            self.current_battles = defaultdict(dict)
 
             #self.name = nickname
 

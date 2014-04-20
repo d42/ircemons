@@ -15,7 +15,7 @@ def parse_command(line):
     while line:
         state = state[line.popleft()]
         if hasattr(state, '__call__'):
-            return state(*line) # TODO: try except
+            return state(*line)
     print("WAT R U DOIN STAHP")
 
 
