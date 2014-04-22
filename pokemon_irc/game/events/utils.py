@@ -25,6 +25,20 @@ def get_pokemon(player_name, pokemon_name, exc=True):
     return pokemon
 
 
+def get_move(move_name):
+    move = session.query(orm.Move).filter_by(name=move_name).first()
+    if not move:
+        raise EventError('nomove', name=move_name)
+    return move
+
+
+def get_battle(battle_id, exc=True):
+        battle = session.query(orm.Battle).filter_by(id=battle_id).first()
+        if not battle and exc:
+            raise EventError("nobattle", id=id)
+        return battle
+
+
 def check_level(pokemon, progression_type='medium_fast'):  # TODO: kind of poor ,_,
     model = progression_model[progression_type]
     level = pokemon.level

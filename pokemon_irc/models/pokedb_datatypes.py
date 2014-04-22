@@ -82,7 +82,6 @@ move_level = namedtuple(
     ]
 )
 
-# move_level.xpath = "//div[@class='col desk-span-6 lap-span-12'][1]/table[1]/tbody/tr"
 move_level.xpath = "//li[@id='svtabs_moves_13']//table[1]/tbody/tr"
 move_level.url = 'http://pokemondb.net/pokedex/{name}'
 

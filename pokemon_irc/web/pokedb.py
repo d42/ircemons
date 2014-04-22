@@ -1,89 +1,95 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-from itertools import zip_longest, product
+from itertools import product, zip_longest
 from collections import defaultdict
+from httpcache import CachingHTTPAdapter
 import requests
 import logging
 
 import lxml.html
 
 
-def get_columns(row, datatype):
-    ret_list = []
-    specials = {'½': 0.5, '2': 2, '0': 0, '∞': 9001, '-': 9002}
 
-    def get(val, def_val):
-        if not val:
-            return def_val
+class PokeDBMachine:
+    def __init__(self):
+        session = requests.session()
 
-        val0 = val[0].strip()
-        if type(def_val) == str:
-            return val0
+    def get_columns(self, row, datatype):
+        ret_list = []
+        specials = {'½': 0.5, '2': 2, '0': 0, '∞': 9001, '-': 9002}
 
-        if type(def_val) == list:
-            return [val0] if len(val) == 1 else val
+        def get(val, def_val):
+            if not def_val:
+                return val
 
-        if type(def_val) == int:
-            return int(specials.get(val0, val0))
+            if not val:
+                return def_val
 
-        if type(def_val) == float:
-            return float(specials.get(val0, val0))
+            val0 = val[0].strip()
+            if type(def_val) == str:
+                return val0
 
-        return type(def_val)(val0)
+            if type(def_val) == list:
+                return [val0] if len(val) == 1 else val
 
-    for (col, val) in zip(row, datatype.defaults):
-        ret_list.append(get(col.xpath('.//text()'), val))
-    return ret_list
+            if type(def_val) == int:
+                return int(specials.get(val0, val0))
 
+            if type(def_val) == float:
+                return float(specials.get(val0, val0))
 
-def request_table(url, classes="data-table wide-table", xpath=None):
-    if not xpath:
-        xpath = "//table[@class='{}'][1]/tbody/tr".format(classes)
+            return type(def_val)(val0)
 
-    r = requests.get(url)
-    r.encoding = 'utf-8'
-    text = r.text
-    tree = lxml.html.fromstring(text)
-    table = tree.xpath(xpath)
-    return table
+        for (col, val) in zip_longest(row, datatype.defaults):
+            ret_list.append(get(col.xpath('.//text()'), val))
+        return ret_list
 
+    def request_table(self, url, classes="data-table wide-table", xpath=None):
+        if not xpath:
+            xpath = "//table[@class='{}'][1]/tbody/tr".format(classes)
 
-def poke_get(datatype, **kwargs):
-    if kwargs:
-        url = datatype.url.format(**kwargs)
-    else:
-        url = datatype.url
+        r = session.get(url)
+        r.encoding = 'utf-8'
+        text = r.text
+        tree = lxml.html.fromstring(text)
+        table = tree.xpath(xpath)
+        return table
 
-    if hasattr(datatype, 'xpath'):
-        table = request_table(url, xpath=datatype.xpath)
+    def poke_get(self, datatype, **kwargs):
+        if kwargs:
+            url = datatype.url.format(**kwargs)
+        else:
+            url = datatype.url
 
-    elif hasattr(datatype, 'classes'):
-        table = request_table(url, classes=datatype.classes)
+        if hasattr(datatype, 'xpath'):
+            table = request_table(url, xpath=datatype.xpath)
 
-    else:
-        table = request_table(url)
+        elif hasattr(datatype, 'classes'):
+            table = request_table(url, classes=datatype.classes)
 
-    def parse_row(row):
-        return get_columns(row, datatype)
+        else:
+            table = request_table(url)
 
-    for row in table:
-        yield datatype(*parse_row(row))
+        def parse_row(row):
+            return get_columns(row, datatype)
 
+        for row in table:
+            yield datatype(*parse_row(row))
 
-def poke_get_type_damage(datatype):
-    table = request_table(datatype.url, classes="type-table")
+    def poke_get_type_damage(self, datatype):
+        table = request_table(datatype.url, classes="type-table")
 
-    def parse_row(row):
-        return get_columns(row, datatype)
+        def parse_row(row):
+            return get_columns(row, datatype)
 
-    matrix = [parse_row(row[1:]) for row in table]
-    damage = defaultdict(dict)
+        matrix = [parse_row(row[1:]) for row in table]
+        damage = defaultdict(dict)
 
-    for (i, j) in product(range(len(datatype)), repeat=2):
-        val = matrix[i][j]
-        if val == 1:
-            continue
+        for (i, j) in product(range(len(datatype)), repeat=2):
+            val = matrix[i][j]
+            if val == 1:
+                continue
 
-        typei, typej = datatype[i], datatype[j]
-        damage[typei][typej] = val
-    return damage
+            typei, typej = datatype[i], datatype[j]
+            damage[typei][typej] = val
+        return damage

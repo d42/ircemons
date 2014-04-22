@@ -19,7 +19,7 @@ class DefaultColumns:
         return "%s" % self.name
 
 
-#                           generic stuff
+#                   This stuff stouldn't change during the game
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -130,6 +130,8 @@ class KnownMove(Base):
     id = Column(Integer, primary_key=True)
     pokemon_id = Column(Integer, ForeignKey("player_pokemon.id"))
     move_id = Column(Integer, ForeignKey("move.id"))
+    pokemon = relationship("PlayerPokemon")
+    move = relationship("Move")
     pp = Column(Integer)
 
 

@@ -3,7 +3,10 @@
 from pokemon_irc.exceptions.text import NoTextError, NoTextVarError
 errors = {
     "nouser": "No such user: {name}.",
+    "nomove": "No such move: {name}.",
     "nopokemon": "Player {name} doesn't have pokemon called {pokename}.",
+    "nobattle": "No battle with id {id}",
+    "rlynopokemon": "Pokemon called {pokename} doesn't exist.",
     "alreadyreg": "User {name} is already registered.",
     "shortpass": "Password is shorter than {length} characters",
     "badpassword": "No such user or bad password.",
@@ -11,12 +14,6 @@ errors = {
     "alreadysummoned": "One is enough",
     "alreadybot": "Bot with nickname {name} is already connected."
 }
-
-pokemon_details = (
-    "[{p.base_pokemon}|{p.name}], [hp:{p.current_hp}/{p.hp}, att:{p.attack}, "
-    "def:{p.defence}, sp att:{p.special_attack}, sp def:{p.special_defence}, "
-    "speed:{p.speed}, level:{p.level}] {p.known_moves}"
-)
 
 action_responses = {
     "okauth": "Authorized.",

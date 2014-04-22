@@ -1,5 +1,6 @@
 from pokemon_irc.models import orm
 from pokemon_irc.models.orm import session
+from pokemon_irc.settings import settings
 from string import ascii_letters, digits
 from random import SystemRandom
 from itertools import count
@@ -8,6 +9,7 @@ import hashlib
 import logging
 from .utils import get_player, get_pokemon
 from datetime import datetime
+
 
 random = SystemRandom()
 choice = random.choice
@@ -69,7 +71,7 @@ def create_pokemon(player_name, pokemon_name):
 
     p = session.query(orm.Pokemon).filter_by(name=name).first()
     if not p:
-        raise EventError('nopokemon', name=player_name, pokename=pokemon_name)
+        raise EventError('rlynopokemon', pokename=pokemon_name)
     used_names = (x.name for x in player.pokemons)
 
     if pokemon_name in used_names:
@@ -111,6 +113,11 @@ def recall_pokemon(battle, pokemon_name):
     pass
 
 
+def add_move(player_name, pokemon_name, move_name):
+    pokemon = get_pokemon(player_name, pokemon_name)
+    move = get_move(move_name)
+    orm.KnownMove
+
 def list_moves(player_name, pokemon_name):
     pokemon = get_pokemon(player_name, pokemon_name)
 
@@ -133,7 +140,8 @@ def challenge_player(player1_name, player2_name):
 def list_pokemons(player_name):
     player = get_player(player_name)
     pokemons = player.pokemons
-    yield from (pokemon_details.format(p=p) for p in pokemons)
+    template = settings['templates']['pokemon_details']
+    yield from (template.format(p=p) for p in pokemons)
 
 
 def level_up(pokemon, new_level):
