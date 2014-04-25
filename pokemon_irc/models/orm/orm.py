@@ -45,6 +45,9 @@ class PokemonMoveLevel(Base):
     level = Column(Integer)
 
 
+class EvolutionTrigger(Base, DefaultColumns):
+    __tablename__ = "evolution_trigger"
+
 class Pokemon(Base, DefaultColumns):
     __tablename__ = "pokemon"
     types = relationship("Type", secondary="pokemon_type")
